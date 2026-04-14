@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Uploader - Log In</title>
+  </head>
+  <body>
+    <%- include("./elements/header.ejs") %>
+    <main>
+      <h1>PlaceHolder</h1>
+      <form>
+        <p>Log In</p>
+        <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"} %>
+        <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"} %>
+        <button type="submit">Log In</button>
+      </form>
+    </main>
+    <%- include("./elements/footer.ejs") %>
+  </body>
+</html>
