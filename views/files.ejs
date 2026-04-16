@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/scripts/files.js" defer></script>
     <title>File Uploader</title>
   </head>
   <body>
@@ -10,12 +11,32 @@
     <main>
       <h1>PlaceHolder</h1>
       <div>
-        <button type="button" id="addFolder">Add Folder</button>
-        <button type="button" id="addFile">Add File</button>
+        <button
+          type="button"
+          id="addFolderBtn"
+          command="show-modal"
+          commandfor="folderModal"
+        >
+          Add Folder
+        </button>
+        <button
+          type="button"
+          id="addFileBtn"
+          command="show-modal"
+          commandfor="fileModal"
+        >
+          Add File
+        </button>
       </div>
-      <%- include("./elements/addModal.ejs") %>
+      <%- include("./elements/addModal.ejs", {userId: userId, type: "folder"}) %>
+      <%- include("./elements/addModal.ejs", {userId: userId, type: "file"}) %>
       <section>
-
+        <% folders.foreach((folder) => { %>
+          <div>
+            <p><%= folder.name %></p>
+            <p><%= folder.creationDate %></p>
+          </div>
+       <% }) %>
       </section>
     </main>
     <%- include("./elements/footer.ejs") %>

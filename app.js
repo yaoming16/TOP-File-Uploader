@@ -54,5 +54,17 @@ passport.deserializeUser(async (id, done) => {
   await deserializeUser(id, done);
 }); */
 
+app.get("/", (req, res) => {
+  res.render("homepage");
+});
+
+app.listen(process.env.PORT, (error) => {
+  if (error) {
+    throw error;
+  }
+  console.log("app listening on port 3000!");
+});
+
+
 //npx prisma studio --config ./prisma.config.js
 //https://www.prisma.io/docs/prisma-orm/quickstart/postgresql
