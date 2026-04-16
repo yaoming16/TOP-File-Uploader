@@ -4,7 +4,7 @@ const {
   localStrategy,
   serializeUser,
   deserializeUser,
-} = require("./middleware/bcrypt");
+} = require("./middleware/bcrypy.js");
 const express = require("express");
 const passport = require("passport");
 const expressSession = require("express-session");
@@ -13,16 +13,18 @@ const { PrismaPg } = require("@prisma/adapter-pg");
 const { PrismaClient } = require("./generated/prisma/client.js");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 
-// DATABASE_URL defined in env file included in prisma.config.js; see Prisma docs
 const connectionString = `${process.env.DATABASE_URL}`;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
+
+const signUpRouter = require("./routers/signUpRouter.js");
 
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(expressSession({ secret: "yaoming", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
@@ -44,7 +46,7 @@ app.use(
   }),
 );
 
-/* passport.use(localStrategy());
+passport.use(localStrategy());
 
 passport.serializeUser((user, done) => {
   serializeUser(user, done);
@@ -52,11 +54,13 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   await deserializeUser(id, done);
-}); */
+}); 
 
 app.get("/", (req, res) => {
   res.render("homepage");
 });
+
+app.use("/signup", signUpRouter);
 
 app.listen(process.env.PORT, (error) => {
   if (error) {

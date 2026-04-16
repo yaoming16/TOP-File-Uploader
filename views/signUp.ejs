@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/scripts/signUp.js" type="module" defer></script>
+    <title>File Uploader - Sign Up</title>
+  </head>
+  <body>
+    <%- include("./elements/header.ejs") %>
+    <main>
+      <h1>PlaceHolder</h1>
+      <form id="signupForm" autocomplete="off">
+        <p>Sign Up</p>
+        <%- include("./elements/input.ejs", {id: "name", text: "Name", type: "text", name: "name"}) %>
+        <%- include("./elements/input.ejs", {id: "lastName", text: "Last Name", type: "text", name: "lastName"}) %>
+        <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"}) %>
+        <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"}) %>
+        <%- include("./elements/input.ejs", {id: "passwordConfirmation", text: "Password Confirmation", type: "password", name: "passwordConfirmation"}) %>
+        <button type="submit">Sign Up</button>
+      </form>
+    </main>
+    <%- include("./elements/footer.ejs") %>
+  </body>
+</html>

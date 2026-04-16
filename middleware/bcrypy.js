@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
-const { getUserByUsername, getUserById } = require("../db/queries");
+const {getUserByEmail, getUserById} = require("../database/queries.js");
 
 //Tries to find user in the DB
 function localStrategy() {
@@ -12,7 +12,7 @@ function localStrategy() {
 
     async (email, password, done) => {
       try {
-        const user = await getUserByUsername(email);
+        const user = getUserByEmail(email);
         if (!user) {
           return done(null, false, { message: "Invalid email" });
         }
