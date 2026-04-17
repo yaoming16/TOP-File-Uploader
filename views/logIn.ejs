@@ -3,16 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/scripts/logIn.js" type="module" defer></script>
     <title>File Uploader - Log In</title>
   </head>
   <body>
     <%- include("./elements/header.ejs") %>
     <main>
       <h1>PlaceHolder</h1>
-      <form>
+      <form id="loginForm" autocomplete="off">
         <p>Log In</p>
-        <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"} %>
-        <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"} %>
+        <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"}) %>
+        <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"}) %>
         <button type="submit">Log In</button>
       </form>
     </main>

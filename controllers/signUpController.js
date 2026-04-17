@@ -46,7 +46,7 @@ async function postSignUp(req, res) {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const { name, lastName, email } = req.body;
-    await createUser(name, lastName, email, hashedPassword);
+    await createUser({ name, lastName, email, password: hashedPassword });
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error("Error creating user:", error);

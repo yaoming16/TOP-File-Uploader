@@ -12,7 +12,7 @@ function localStrategy() {
 
     async (email, password, done) => {
       try {
-        const user = getUserByEmail(email);
+        const user = await getUserByEmail(email);
         if (!user) {
           return done(null, false, { message: "Invalid email" });
         }

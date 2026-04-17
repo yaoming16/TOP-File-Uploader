@@ -12,13 +12,13 @@ async function getUserById(id) {
   });
 }
 
-async function createUser(email, name, lastName, password) {
+async function createUser(userInfo) {
   await prisma.user.create({
     data: {
-      email: email,
-      name: name,
-      lastName: lastName,
-      password: password,
+      email: userInfo.email,
+      name: userInfo.name,
+      lastName: userInfo.lastName,
+      password: userInfo.password,
     },
   });
 }

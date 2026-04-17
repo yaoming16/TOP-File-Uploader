@@ -9,33 +9,24 @@ const express = require("express");
 const passport = require("passport");
 const expressSession = require("express-session");
 
-const { PrismaPg } = require("@prisma/adapter-pg");
-const { PrismaClient } = require("./generated/prisma/client.js");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 
-const connectionString = `${process.env.DATABASE_URL}`;
-const adapter = new PrismaPg({ connectionString });
-const prisma = new PrismaClient({ adapter });
+const { prisma } = require("./lib/prisma.js");
 
 const signUpRouter = require("./routers/signUpRouter.js");
+const logInRouter = require("./routers/logInRouter.js");
 
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-app.use(expressSession({ secret: "yaoming", resave: false, saveUninitialized: false }));
-app.use(passport.session());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static(path.join(__dirname, "public")));
-
 app.use(
   expressSession({
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // ms
     },
-    secret: "yaoming",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     store: new PrismaSessionStore(prisma, {
@@ -45,6 +36,19 @@ app.use(
     }),
   }),
 );
+
+app.use(passport.session());
+app.use(express.urlencoded({ extended: true }));
+
+// Make the user object available to all views
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  res.locals.isAuthenticated = req.isAuthenticated(); 
+  next();
+});
+
+app.use(express.static(path.join(__dirname, "public")));
+
 
 passport.use(localStrategy());
 
@@ -60,6 +64,7 @@ app.get("/", (req, res) => {
   res.render("homepage");
 });
 
+app.use("/login", logInRouter);
 app.use("/signup", signUpRouter);
 
 app.listen(process.env.PORT, (error) => {
