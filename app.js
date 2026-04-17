@@ -13,7 +13,9 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 
 const { prisma } = require("./lib/prisma.js");
 
+//Require routers
 const signUpRouter = require("./routers/signUpRouter.js");
+const filesRouter = require("./routers/filesRouter.js");
 const logInRouter = require("./routers/logInRouter.js");
 
 const app = express();
@@ -21,6 +23,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+//Session configuration
 app.use(
   expressSession({
     cookie: {
@@ -60,12 +63,14 @@ passport.deserializeUser(async (id, done) => {
   await deserializeUser(id, done);
 }); 
 
+//Pages views
 app.get("/", (req, res) => {
   res.render("homepage");
 });
 
 app.use("/login", logInRouter);
 app.use("/signup", signUpRouter);
+app.use("/files", filesRouter);
 
 app.listen(process.env.PORT, (error) => {
   if (error) {

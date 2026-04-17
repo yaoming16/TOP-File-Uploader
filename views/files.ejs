@@ -28,8 +28,8 @@
           Add File
         </button>
       </div>
-      <%- include("./elements/addModal.ejs", {userId: userId, type: "folder"}) %>
-      <%- include("./elements/addModal.ejs", {userId: userId, type: "file"}) %>
+      <%- include("./elements/addModal.ejs", {userId: currentUser.id, type: "folder"}) %>
+      <%- include("./elements/addModal.ejs", {userId: currentUser.id, type: "file"}) %>
       <section>
         <% folders.foreach((folder) => { %>
           <div>
