@@ -13,24 +13,32 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  name String 
+  id       Int      @id @default(autoincrement())
+  name     String 
   lastName String
-  email String @unique
+  email    String   @unique
   password String
-  folders Folder[]
+  folders  Folder[] // A user owns many folders
 }
 
 model Folder {
-  id Int @id @default(autoincrement())
-  name String 
+  id           Int      @id @default(autoincrement())
+  name         String 
   creationDate DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  userId Int
-  photos Photo[]
+  
+  // Link to the user who owns it
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  
+  files       File[]
+
+  // Self-relation for parent/child folders
+  mainFolderId Int?     // If this is NULL, it means this is a main folder
+  mainFolder   Folder?  @relation("subMainFolder", fields: [mainFolderId], references: [id])
+  subFolders   Folder[] @relation("subMainFolder")
 }
 
-model Photo {
+model File {
   id Int @id @default(autoincrement())
   name String 
   link String @unique
@@ -45,3 +53,6 @@ model Session {
   data      String   
   expiresAt   DateTime
 }
+
+//npx prisma generate
+//npx prisma db push # or npx prisma migrate dev

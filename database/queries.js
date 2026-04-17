@@ -19,6 +19,9 @@ async function createUser(userInfo) {
       name: userInfo.name,
       lastName: userInfo.lastName,
       password: userInfo.password,
+      folders: {
+        create: [{name: "root" }]
+      }
     },
   });
 }
