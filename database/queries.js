@@ -20,10 +20,41 @@ async function createUser(userInfo) {
       lastName: userInfo.lastName,
       password: userInfo.password,
       folders: {
-        create: [{name: "root" }]
-      }
+        create: [{ name: "root" }],
+      },
     },
   });
 }
 
-module.exports = { getUserByEmail, getUserById, createUser };
+async function getFolderById(folderId, userId) {
+  return await prisma.folder.findUnique({
+    where: { id: folderId, userId: userId },
+    include: { subFolders: true, files: true },
+  });
+}
+
+async function getFolderByUser(userId, mainFolderId = null) {
+  return await prisma.folder.findFirst({
+    where: { userId: userId, mainFolderId: mainFolderId },
+    include: { subFolders: true, files: true },
+  });
+}
+
+async function postNewFolder(newFolder) {
+  await prisma.folder.create({
+    data: {
+      name: newFolder.name,
+      userId: newFolder.userId,
+      mainFolderId: newFolder.mainFolderId,
+    },
+  });
+}
+
+module.exports = {
+  getUserByEmail,
+  getUserById,
+  createUser,
+  getFolderById,
+  getFolderByUser,
+  postNewFolder,
+};

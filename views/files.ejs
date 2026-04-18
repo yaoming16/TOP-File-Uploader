@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/scripts/files.js" defer></script>
+    <script src="/scripts/files.js" type="module" defer></script>
     <title>File Uploader</title>
   </head>
   <body>
@@ -28,15 +28,21 @@
           Add File
         </button>
       </div>
-      <%- include("./elements/addModal.ejs", {userId: currentUser.id, type: "folder"}) %>
-      <%- include("./elements/addModal.ejs", {userId: currentUser.id, type: "file"}) %>
+      <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "folder"}) %>
+      <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "file"}) %>
       <section>
-        <% folders.foreach((folder) => { %>
-          <div>
-            <p><%= folder.name %></p>
-            <p><%= folder.creationDate %></p>
-          </div>
-       <% }) %>
+        <% folders.forEach((folder) => { %>
+        <div>
+          <a href="/files/<%= folder.id %>"> <%= folder.name %> </a>
+          <p><%= folder.creationDate %></p>
+        </div>
+        <% }) %>
+        <% files.forEach((file) => { %>
+        <div>
+          <p><%= file.name %></p>
+          <p><%= file.creationDate %></p>
+        </div>
+        <% }) %>
       </section>
     </main>
     <%- include("./elements/footer.ejs") %>

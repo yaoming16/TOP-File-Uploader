@@ -1,13 +1,25 @@
-<dialog id="<% type=== 'folder' ? "folderModal" : "fileModal" %>">
-  <form action="<%= type === 'folder' ? '/add/' + userId + '/folder' : '/add/' + userId + '/file' %>" >
+<dialog id="<%= type=== 'folder' ? 'folderModal' : 'fileModal' %>">
+  <form
+    data-folder-id="<%= mainFolderId %>"
+    id="<%= type=== 'folder' ? 'folderForm' : 'fileForm' %>"
+  >
     <% if (type === "folder") { %>
-      <%- include("./input.ejs", {id: "folderName", text: "Folder Name", type: "text", name: "folderName"}) %>
+    <%- include("./input.ejs", {id: "folderName",
+    text: "Folder Name", type: "text", name: "folderName"}) %>
     <% } else if(type === "file") { %>
-      <%- include("./input.ejs", {id: "file", text: "File Upload", type: "file", name: "file"}) %>
+    <%- include("./input.ejs", {id: "file", text: "File Upload", type: "file", name: "file"}) %>
     <% } %>
     <div>
-      <button commandfor="<% type=== 'folder' ? "folderModal" : "fileModal" %>" command="close" type="button">Cancel</button>
-      <button type="submit"><%= type === 'folder' ? 'Create' : 'Upload' %></button>
+      <button
+        commandfor="<%= type=== 'folder' ? 'folderModal' : 'fileModal' %>"
+        command="close"
+        type="button"
+      >
+        Cancel
+      </button>
+      <button type="submit">
+        <%= type === 'folder' ? 'Create' : 'Upload' %>
+      </button>
     </div>
   </form>
 </dialog>
