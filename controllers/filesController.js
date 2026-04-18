@@ -1,6 +1,6 @@
 const { validationResult, body } = require("express-validator");
 const {
-  getFolderByUser,
+  getMainFolderOfUser,
   postNewFolder,
   getFolderById,
 } = require("../database/queries.js");
@@ -28,7 +28,7 @@ async function getFiles(req, res) {
   //We send user to their root folder if req.params.folderId is undefined or
   // requested folder isnt owned by current user
   if (!folder) {
-    folder = await getFolderByUser(req.user.id, null);
+    folder = await getMainFolderOfUser(req.user.id, null);
   }
 
   return res.render("files", {

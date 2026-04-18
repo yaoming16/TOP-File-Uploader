@@ -33,9 +33,9 @@ async function getFolderById(folderId, userId) {
   });
 }
 
-async function getFolderByUser(userId, mainFolderId = null) {
+async function getMainFolderOfUser(userId) {
   return await prisma.folder.findFirst({
-    where: { userId: userId, mainFolderId: mainFolderId },
+    where: { userId: userId, mainFolderId: null },
     include: { subFolders: true, files: true },
   });
 }
@@ -55,6 +55,6 @@ module.exports = {
   getUserById,
   createUser,
   getFolderById,
-  getFolderByUser,
+  getMainFolderOfUser,
   postNewFolder,
 };
