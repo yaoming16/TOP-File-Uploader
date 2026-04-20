@@ -3,7 +3,11 @@ const {
   getMainFolderOfUser,
   postNewFolder,
   getFolderById,
+  postNewFile
 } = require("../database/queries.js");
+const { randomUUID } = require("crypto");
+const { uploadToCloudinary } = require("../lib/cloudinary.js");
+const path = require("path");
 
 const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
@@ -57,8 +61,37 @@ async function postFolder(req, res) {
   res.status(201).json({ message: "Folder created successfully" });
 }
 
+async function postFile(req, res) {
+  //If user is not logged In we will send them to the log in page.
+  checkAuth(req, res);
+
+    if (!req.file) {
+    return res.status(400).json({
+      errors: [{ msg: "Please upload a file", path: "file" }],
+    });
+  }
+
+  // Use randomUUID to generate a unique name for the image
+  const imgId = randomUUID();
+  const fileExtension = path.extname(req.file.originalname).toLowerCase();
+  const newImgName = imgId + fileExtension;
+  const uploadResult = await uploadToCloudinary(req.file.buffer, newImgName);
+
+  const imgLink = uploadResult.secure_url;
+
+  await postNewFile({
+    name: req.file.originalname,
+    link: imgLink,
+    folderId: parseInt(req.params.mainFolderId),
+    userId: req.user.id,
+    size: req.file.size,
+  });
+  res.status(201).json({ message: "File created successfully" });
+}
+
 module.exports = {
   folderValidation,
   getFiles,
   postFolder,
+  postFile,
 };

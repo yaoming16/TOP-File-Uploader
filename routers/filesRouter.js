@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const filesController = require("../controllers/filesController");
+const multer = require('multer');
 
 const filesRouter = Router();
+
+const storage = multer.memoryStorage(); 
+const upload = multer({ storage: storage });
 
 filesRouter.get("/", filesController.getFiles);
 filesRouter.get("/:folderId", filesController.getFiles);
@@ -10,5 +14,10 @@ filesRouter.post(
   filesController.folderValidation,
   filesController.postFolder,
 );
+filesRouter.post(
+  '/add/:mainFolderId/file',
+  upload.single('file'),
+  filesController.postFile
+)
 
 module.exports = filesRouter;

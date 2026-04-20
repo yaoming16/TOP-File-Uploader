@@ -1,6 +1,11 @@
 export async function sendFormData(event, fetchUrl, method, redirectUrl) {
-  const formData = new FormData(event.target);
-  const body = new URLSearchParams(formData);
+  const formElement = event.target;
+  const formData = new FormData(formElement);
+
+  // Check if form has a file input. 
+  // If it does, send raw FormData. If not, fallback to URLSearchParams
+  const hasFile = formElement.querySelector("input[type='file']");
+  const body = hasFile ? formData : new URLSearchParams(formData);
 
   const response = await customFetch(fetchUrl, method, redirectUrl, body);
   if (response && response.errors) {
@@ -12,11 +17,9 @@ export async function sendFormData(event, fetchUrl, method, redirectUrl) {
 
 export async function customFetch(fetchUrl, method, redirectUrl, body = null) {
   try {
+
     const response = await fetch(fetchUrl, {
       method: method,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      },
       body,
     });
 

@@ -50,6 +50,18 @@ async function postNewFolder(newFolder) {
   });
 }
 
+async function postNewFile(newFile) {
+  await prisma.file.create({
+    data: {
+      name: newFile.name,
+      link: newFile.link,
+      folderId: newFile.folderId,
+      userId: newFile.userId,
+      size: newFile.size,
+    }
+  })
+}
+
 module.exports = {
   getUserByEmail,
   getUserById,
@@ -57,4 +69,5 @@ module.exports = {
   getFolderById,
   getMainFolderOfUser,
   postNewFolder,
+  postNewFile
 };

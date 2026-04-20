@@ -46,12 +46,11 @@ app.use(express.urlencoded({ extended: true }));
 // Make the user object available to all views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  res.locals.isAuthenticated = req.isAuthenticated(); 
+  res.locals.isAuthenticated = req.isAuthenticated();
   next();
 });
 
 app.use(express.static(path.join(__dirname, "public")));
-
 
 passport.use(localStrategy());
 
@@ -61,7 +60,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   await deserializeUser(id, done);
-}); 
+});
 
 //Pages views
 app.get("/", (req, res) => {
@@ -72,13 +71,29 @@ app.use("/login", logInRouter);
 app.use("/signup", signUpRouter);
 app.use("/files", filesRouter);
 
+// Global Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error("Global error handler caught an error:", err);
+
+  // Distinguish between errors you sent vs unexpected crashes
+  const statusCode = err.status || 500;
+  const isInternalError = statusCode >= 500;
+
+  const errorMessage = isInternalError
+    ? "An unexpected error occurred on the server. Please try again later."
+    : err.message;
+
+  res.status(statusCode).json({
+    errors: [{ msg: errorMessage }],
+  });
+});
+
 app.listen(process.env.PORT, (error) => {
   if (error) {
     throw error;
   }
   console.log("app listening on port 3000!");
 });
-
 
 //npx prisma studio --config ./prisma.config.js
 //https://www.prisma.io/docs/prisma-orm/quickstart/postgresql

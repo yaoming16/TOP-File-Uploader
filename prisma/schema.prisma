@@ -45,6 +45,7 @@ model File {
   name String 
   link String @unique
   creationDate DateTime @default(now())
+  size Int
   folder Folder @relation(fields: [folderId], references: [id])
   folderId Int
 
