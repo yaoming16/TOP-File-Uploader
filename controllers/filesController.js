@@ -3,7 +3,7 @@ const {
   getMainFolderOfUser,
   postNewFolder,
   getFolderById,
-  postNewFile
+  postNewFile,
 } = require("../database/queries.js");
 const { randomUUID } = require("crypto");
 const { uploadToCloudinary } = require("../lib/cloudinary.js");
@@ -16,35 +16,57 @@ const folderValidation = [
 function checkAuth(req, res) {
   //If user is not logged In we will send them to the log in page.
   if (!req.isAuthenticated()) {
-    return res.render("logIn");
+    res.redirect("/logIn");
+    return false;
   }
+  return true;
+}
+
+//Only returns the folder of id req.paras.id if current user is the owner of the requested folder.
+//Otherwise returns null
+async function getFolder(req) {
+  let folder = null;
+  if (req.params.folderId !== undefined) {
+    // If user is not owner of requested folder, folder will continue to be null
+    folder = await getFolderById(parseInt(req.params.folderId), req.user.id);
+  } else {
+    // If no folderId was requested, get their root folder
+    folder = await getMainFolderOfUser(req.user.id, null);
+  }
+  return folder;
 }
 
 async function getFiles(req, res) {
   //If user is not logged In we will send them to the log in page.
-  checkAuth(req, res);
+  if (!checkAuth(req, res)) return;
 
-  let folder = null;
-  if (req.params.folderId !== undefined) {
-    //This will return null if the owner of the folder with id req.params.folderId inst owned by req.user (current user)
-    folder = await getFolderById(parseInt(req.params.folderId), req.user.id);
-  }
-  //We send user to their root folder if req.params.folderId is undefined or
-  // requested folder isnt owned by current user
+  const folder = await getFolder(req);
+
   if (!folder) {
-    folder = await getMainFolderOfUser(req.user.id, null);
+    // if requested folder does not exist we will get the root folder
+    const rootFolder = await getMainFolderOfUser(req.user.id, null);
+
+    // We will render the root folder and show the errors there
+    return res.status(404).render("files", {
+      folders: rootFolder.subFolders,
+      files: rootFolder.files,
+      mainFolderId: rootFolder.id,
+      error:
+        "The requested folder does not exist or you do not have permission to view it.",
+    });
   }
 
   return res.render("files", {
     folders: folder.subFolders,
     files: folder.files,
     mainFolderId: folder.id,
+    error: null,
   });
 }
 
 async function postFolder(req, res) {
   //If user is not logged In we will send them to the log in page.
-  checkAuth(req, res);
+  if (!checkAuth(req, res)) return;
 
   //Validate folder input
   const errors = validationResult(req);
@@ -63,9 +85,9 @@ async function postFolder(req, res) {
 
 async function postFile(req, res) {
   //If user is not logged In we will send them to the log in page.
-  checkAuth(req, res);
+  if (!checkAuth(req, res)) return;
 
-    if (!req.file) {
+  if (!req.file) {
     return res.status(400).json({
       errors: [{ msg: "Please upload a file", path: "file" }],
     });
@@ -87,6 +109,13 @@ async function postFile(req, res) {
     size: req.file.size,
   });
   res.status(201).json({ message: "File created successfully" });
+}
+
+async function getOneFile(req, res) {
+  //If user is not logged In we will send them to the log in page.
+  checkAuth(req, res);
+
+  //We want to download the file only if the current user is the owner of the file
 }
 
 module.exports = {

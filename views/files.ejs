@@ -46,5 +46,11 @@
       </section>
     </main>
     <%- include("./elements/footer.ejs") %>
+
+    <% if (locals.error) { %>
+    <script>
+      console.error("<%= error %>");
+    </script>
+    <% } %>
   </body>
 </html>
