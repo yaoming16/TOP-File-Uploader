@@ -4,10 +4,12 @@ const {
   postNewFolder,
   getFolderById,
   postNewFile,
+  getFileById,
 } = require("../database/queries.js");
 const { randomUUID } = require("crypto");
 const { uploadToCloudinary } = require("../lib/cloudinary.js");
 const path = require("path");
+const https = require("https");
 
 const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
@@ -93,29 +95,66 @@ async function postFile(req, res) {
     });
   }
 
-  // Use randomUUID to generate a unique name for the image
-  const imgId = randomUUID();
-  const fileExtension = path.extname(req.file.originalname).toLowerCase();
-  const newImgName = imgId + fileExtension;
-  const uploadResult = await uploadToCloudinary(req.file.buffer, newImgName);
+  // Use randomUUID to generate a unique name for the file
+  const fileId = randomUUID();
+  const originalName = req.file.originalname;
+  const fileExtension = path.extname(originalName).toLowerCase();
+  const newFileName = fileId + fileExtension;
+
+  // If cloudinary returns an error we will send custom messages to user
+  let uploadResult;
+  try {
+    uploadResult = await uploadToCloudinary(req.file.buffer, newFileName);
+  } catch (err) {
+    console.error("Cloudinary Upload Failed:", err);
+    
+
+    return;
+  }
+
+  // { message: 'Empty file', name: 'Error', http_code: 400 }
+
+  //We want to save the name of the file without the extension
+  const nameWithoutExt = fileExtension?  originalName.slice(0, -fileExtension.length)
+    : originalName;
 
   const imgLink = uploadResult.secure_url;
 
   await postNewFile({
-    name: req.file.originalname,
+    name: nameWithoutExt,
     link: imgLink,
     folderId: parseInt(req.params.mainFolderId),
     userId: req.user.id,
     size: req.file.size,
+    extension: fileExtension
   });
   res.status(201).json({ message: "File created successfully" });
 }
 
 async function getOneFile(req, res) {
   //If user is not logged In we will send them to the log in page.
-  checkAuth(req, res);
+  if (!checkAuth(req, res)) return;
 
-  //We want to download the file only if the current user is the owner of the file
+  // File will be null if the file with id req.params.fileId isnt owned by current user
+  const file = await getFileById(parseInt(req.params.fileId), req.user.id);
+  if (!file) return res.status(403).send("Unauthorized");
+
+  //Fetch file from Cloudinary
+  https
+    .get(file.link, (cloudinaryRes) => {
+      // Set headers
+      res.setHeader(
+        "Content-Disposition", // Tells the browser to open "save as"
+        `attachment; filename="${file.name}"`, //Tells the browser the suggested file name
+      );
+      res.setHeader("Content-Type", cloudinaryRes.headers["content-type"]); // Copy the content type cloudinary sent
+
+      // Pipe the data directly to the user (dont wait for the server to finish the download before starting to send the file)
+      cloudinaryRes.pipe(res);
+    })
+    .on("error", (err) => {
+      res.status(500).send("Error downloading file");
+    });
 }
 
 module.exports = {
@@ -123,4 +162,5 @@ module.exports = {
   getFiles,
   postFolder,
   postFile,
+  getOneFile
 };

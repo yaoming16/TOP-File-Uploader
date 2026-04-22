@@ -58,8 +58,15 @@ async function postNewFile(newFile) {
       folderId: newFile.folderId,
       userId: newFile.userId,
       size: newFile.size,
-    }
-  })
+      extension: newFile.extension
+    },
+  });
+}
+
+async function getFileById(fileId, userId) {
+  return await prisma.file.findUnique({
+    where: { id: fileId, userId: userId },
+  });
 }
 
 module.exports = {
@@ -69,5 +76,6 @@ module.exports = {
   getFolderById,
   getMainFolderOfUser,
   postNewFolder,
-  postNewFile
+  postNewFile,
+  getFileById,
 };

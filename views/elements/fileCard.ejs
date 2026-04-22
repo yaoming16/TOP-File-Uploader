@@ -1,0 +1,18 @@
+<% 
+  let svgRoute = "";
+  switch (file.extension) {
+    case ".xlsx":
+      svgRoute = "../svgs/xlsxSvg.ejs"
+      break;
+    default:
+      svgRoute = "../svgs/genericFileSvg.ejs"
+      break;
+  }
+%>
+
+<article>
+  <%- include(svgRoute) %>
+  <a href="/files/<%= file.id %>/file"><%= file.name %></a>
+  <p><%= file.creationDate %></p>
+  <p><%= file.size %></p>
+</article>

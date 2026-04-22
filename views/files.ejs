@@ -30,20 +30,25 @@
       </div>
       <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "folder"}) %>
       <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "file"}) %>
-      <section>
-        <% folders.forEach((folder) => { %>
-        <div>
-          <a href="/files/<%= folder.id %>"> <%= folder.name %> </a>
-          <p><%= folder.creationDate %></p>
-        </div>
-        <% }) %>
-        <% files.forEach((file) => { %>
-        <div>
-          <p><%= file.name %></p>
-          <p><%= file.creationDate %></p>
-        </div>
-        <% }) %>
+      <section aria-label="Folder Contents">
+
+        <!-- Folders -->
+        <ul>
+          <% folders.forEach((folder) => { %>
+          <li>
+            <%- include("./elements/folderCard.ejs", {folder: folder}) %>
+          </li>
+          <% }) %>
+          
+          <!-- Files -->
+          <% files.forEach((file) => { %>
+            <li>
+              <%- include("./elements/fileCard.ejs", {file : file}) %>
+            </li>
+            <% }) %>
+          </ul>
       </section>
+
     </main>
     <%- include("./elements/footer.ejs") %>
 

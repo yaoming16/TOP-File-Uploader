@@ -17,7 +17,7 @@ folderForm.addEventListener("submit", async (e) => {
     e,
     `/files/add/${folderId}/folder`,
     "POST",
-    `/files/${folderId}`,
+    `/files/${folderId}/folder`,
   );
   if (errors) {
     for (const e of errors) {
@@ -42,7 +42,7 @@ fileForm.addEventListener("submit", async (e) => {
     e,
     `/files/add/${folderId}/file`,
     "POST",
-    `/files/${folderId}`,
+    `/files/${folderId}/folder`,
   );
   if (errors) {
     for (const e of errors) {
