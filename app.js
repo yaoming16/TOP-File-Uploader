@@ -17,6 +17,7 @@ const { prisma } = require("./lib/prisma.js");
 const signUpRouter = require("./routers/signUpRouter.js");
 const filesRouter = require("./routers/filesRouter.js");
 const logInRouter = require("./routers/logInRouter.js");
+const logOutRouter = require("./routers/logOutRouter.js");
 
 const app = express();
 
@@ -30,8 +31,8 @@ app.use(
       maxAge: 7 * 24 * 60 * 60 * 1000, // ms
     },
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
+    resave: false, 
+    saveUninitialized: false, // We dont want to create rows for visitors that are not logged in 
     store: new PrismaSessionStore(prisma, {
       checkPeriod: 2 * 60 * 1000, //ms
       dbRecordIdIsSessionId: true,
@@ -40,6 +41,7 @@ app.use(
   }),
 );
 
+app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
@@ -70,6 +72,7 @@ app.get("/", (req, res) => {
 app.use("/login", logInRouter);
 app.use("/signup", signUpRouter);
 app.use("/files", filesRouter);
+app.use("/logout", logOutRouter)
 
 // Global Error Handler Middleware
 app.use((err, req, res, next) => {

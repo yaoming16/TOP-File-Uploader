@@ -107,15 +107,36 @@ async function postFile(req, res) {
     uploadResult = await uploadToCloudinary(req.file.buffer, newFileName);
   } catch (err) {
     console.error("Cloudinary Upload Failed:", err);
-    
 
-    return;
+    //First we set the message based on the error message that cloudinary returned
+    let errorMessage;
+    switch (err.message) {
+      case "Empty file":
+        errorMessage =
+          "The file you are trying to upload is empty, please try again with other file";
+        break;
+      default:
+        errorMessage =
+          "Failed to upload file. Please check the file format and try again.";
+        break;
+    }
+
+    // We send the error message to the user
+    return res.status(400).json({
+      errors: [
+        {
+          msg: errorMessage,
+          path: "file",
+        },
+      ],
+    });
   }
 
   // { message: 'Empty file', name: 'Error', http_code: 400 }
 
   //We want to save the name of the file without the extension
-  const nameWithoutExt = fileExtension?  originalName.slice(0, -fileExtension.length)
+  const nameWithoutExt = fileExtension
+    ? originalName.slice(0, -fileExtension.length)
     : originalName;
 
   const imgLink = uploadResult.secure_url;
@@ -126,7 +147,7 @@ async function postFile(req, res) {
     folderId: parseInt(req.params.mainFolderId),
     userId: req.user.id,
     size: req.file.size,
-    extension: fileExtension
+    extension: fileExtension,
   });
   res.status(201).json({ message: "File created successfully" });
 }
@@ -162,5 +183,5 @@ module.exports = {
   getFiles,
   postFolder,
   postFile,
-  getOneFile
+  getOneFile,
 };

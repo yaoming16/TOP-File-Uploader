@@ -1,8 +1,25 @@
+<!-- Icons -->
+<!-- https://www.svgrepo.com/collection/vscode-icons/7 -->
+
 <% 
   let svgRoute = "";
   switch (file.extension) {
     case ".xlsx":
+    case ".ods":
       svgRoute = "../svgs/xlsxSvg.ejs"
+      break;
+    case ".docx":
+    case ".doc":
+    case ".odt":
+      svgRoute = "../svgs/docSvg.ejs"
+      break;
+    case ".ppt":
+    case ".pptx":
+    case ".odp":
+      svgRoute = "../svgs/pptSvg.ejs"
+      break;
+    case ".txt":
+      svgRoute = "../svgs/txtSvg.ejs"
       break;
     default:
       svgRoute = "../svgs/genericFileSvg.ejs"
@@ -15,4 +32,5 @@
   <a href="/files/<%= file.id %>/file"><%= file.name %></a>
   <p><%= file.creationDate %></p>
   <p><%= file.size %></p>
+  <p><%= file.extension %></p>
 </article>
