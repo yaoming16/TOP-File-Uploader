@@ -1,0 +1,65 @@
+/* NavBar */
+
+.flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nav-ul {
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+nav {
+  background-color: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+nav h2 {
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+nav form {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+nav ul li {
+  display: flex;
+  align-items: center;
+}
+
+nav a,
+nav button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--color-primary);
+  transition: all 0.3s ease-in-out;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+nav a:hover,
+nav button:hover {
+  background-color: var(--color-bg-hover);
+}
+
+nav a:focus,
+nav button:focus {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

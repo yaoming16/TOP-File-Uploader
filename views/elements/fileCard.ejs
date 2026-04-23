@@ -1,36 +1,76 @@
 <!-- Icons -->
 <!-- https://www.svgrepo.com/collection/vscode-icons/7 -->
 
-<% 
-  let svgRoute = "";
-  switch (file.extension) {
-    case ".xlsx":
-    case ".ods":
-      svgRoute = "../svgs/xlsxSvg.ejs"
-      break;
-    case ".docx":
-    case ".doc":
-    case ".odt":
-      svgRoute = "../svgs/docSvg.ejs"
-      break;
-    case ".ppt":
-    case ".pptx":
-    case ".odp":
-      svgRoute = "../svgs/pptSvg.ejs"
-      break;
-    case ".txt":
-      svgRoute = "../svgs/txtSvg.ejs"
-      break;
-    default:
-      svgRoute = "../svgs/genericFileSvg.ejs"
-      break;
-  }
+<!-- prettier-ignore -->
+<%
+/* Set icon to display */
+let svgRoute = "";
+switch (file.extension) {
+  case ".xlsx":
+  case ".ods":
+    svgRoute = "../svgs/xlsxSvg.ejs"
+    break;
+  case ".docx":
+  case ".doc":
+  case ".odt":
+    svgRoute = "../svgs/docSvg.ejs"
+    break;
+  case ".ppt":
+  case ".pptx":
+  case ".odp":
+    svgRoute = "../svgs/pptSvg.ejs"
+    break;
+  case ".txt":
+    svgRoute = "../svgs/txtSvg.ejs"
+    break;
+  case ".pdf":
+    svgRoute = "../svgs/pdfSvg.ejs"
+    break;
+  default:
+    svgRoute = "../svgs/genericFileSvg.ejs"
+    break;
+};
+
+/* Format date */
+options = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false
+};
+const date = new Date(file.creationDate);
+const dateDisplay = date.toLocaleTimeString(undefined, options);
+
+/* Format size */
+let displaySize = file.size;
+let unit = "Bytes";
+const gb = 1024 * 1024 * 1024;
+const mb = 1024 * 1024;
+const kb = 1024;
+switch (true) {
+  case (file.size >= gb):
+    displaySize = displaySize / gb;
+    unit = "GB";
+    break;
+  case (file.size >= mb):
+    displaySize = displaySize / mb;
+    unit = "MB";
+    break;
+  case (file.size >= kb):
+    displaySize = displaySize / kb;
+    unit = "KB";
+    break;
+};
 %>
 
-<article>
-  <%- include(svgRoute) %>
-  <a href="/files/<%= file.id %>/file"><%= file.name %></a>
-  <p><%= file.creationDate %></p>
-  <p><%= file.size %></p>
+<article class="file-container">
+  <div class="file-name-div">
+    <%- include(svgRoute) %>
+    <a href="/files/<%= file.id %>/file"><%= file.name %></a>
+  </div>
+  <p><%= dateDisplay %></p>
+  <p><%= displaySize.toFixed(2) + " " + unit %></p>
   <p><%= file.extension %></p>
 </article>

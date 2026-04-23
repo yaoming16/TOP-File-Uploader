@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/index.css"> 
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/files.css">
     <script src="/scripts/files.js" type="module" defer></script>
-    <title>File Uploader</title>
+    <title>FileSpace - Files</title>
   </head>
   <body>
     <%- include("./elements/header.ejs") %>
     <main>
-      <h1>PlaceHolder</h1>
-      <div>
+      <h1><%= currentUser.name + ' ' + currentUser.lastName %></h1>
+      <div class="btn-div-files">
         <button
           type="button"
           id="addFolderBtn"
@@ -32,8 +36,18 @@
       <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "file"}) %>
       <section aria-label="Folder Contents">
 
-        <!-- Folders -->
+        <!-- Titles -->
         <ul>
+          <li>
+            <div class="file-container header-row">
+              <p>Name</p>
+              <p>Upload Date</p>
+              <p>Size</p>
+              <p>Extension</p>
+            </div>
+          </li>
+          
+          <!-- Folders -->
           <% folders.forEach((folder) => { %>
           <li>
             <%- include("./elements/folderCard.ejs", {folder: folder}) %>

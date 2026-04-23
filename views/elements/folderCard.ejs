@@ -1,5 +1,20 @@
-<article>
-  <%- include("../svgs/folderSvg.ejs") %>
-  <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
-  <p><%= folder.creationDate %></p>
+<%
+options = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false
+}
+const date = new Date(folder.creationDate);
+const dateDisplay = date.toLocaleTimeString(undefined,options)
+%>
+
+<article class="file-container">
+  <div class="file-name-div">
+    <%- include("../svgs/folderSvg.ejs") %>
+    <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
+  </div>
+  <p><%= dateDisplay %></p>
 </article>

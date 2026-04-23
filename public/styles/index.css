@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  /* Primary brand color - Minimalist Graphite */
+  --color-primary: #334155;
+  --color-primary-hover: #0f172a;
+  --color-primary-light: #e2e8f0;
+
+  /* Background & Surfaces (Slightly darker base) */
+  --color-bg-base: #f1f5f9;
+  --color-bg-surface: #ffffff;
+  --color-bg-hover: #e2e8f0;
+
+  /* Text & Content */
+  --color-text-main: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-inverse: #ffffff;
+
+  /* Borders & Dividers */
+  --color-border: #cbd5e1;
+  --color-border-hover: #94a3b8;
+
+  /* Specific UI Elements */
+  --color-folder: #fbbf24;
+  --color-folder-hover: #f59e0b;
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+
+  /* Typography */
+  --font-title: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-highlight: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+ul {
+  list-style: none;
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+button {
+  font-family: var(--font-body);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--color-primary-hover);
+}
+
+dialog {
+  margin: auto auto;
+  width: 400px;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: var(--color-bg-surface);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
