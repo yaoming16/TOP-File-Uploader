@@ -6,10 +6,8 @@ const {
   postNewFile,
   getFileById,
 } = require("../database/queries.js");
-const { randomUUID } = require("crypto");
-const { uploadToCloudinary } = require("../lib/cloudinary.js");
-const path = require("path");
 const https = require("https");
+const { handleFileUpload } = require("../services/fileService.js");
 
 const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
@@ -77,60 +75,30 @@ async function postFile(req, res) {
     });
   }
 
-  // Use randomUUID to generate a unique name for the file
-  const fileId = randomUUID();
-  const originalName = req.file.originalname;
-  const fileExtension = path.extname(originalName).toLowerCase();
-  const newFileName = fileId + fileExtension;
-
-  // If cloudinary returns an error we will send custom messages to user
-  let uploadResult;
+  let uploadInfo;
   try {
-    uploadResult = await uploadToCloudinary(req.file.buffer, newFileName);
+    uploadInfo = await handleFileUpload(req.file.buffer, req.file.originalname);
   } catch (err) {
-    // error example: { message: 'Empty file', name: 'Error', http_code: 400 }
-    console.error("Cloudinary Upload Failed:", err);
-
-    //First we set the message based on the error message that cloudinary returned
-    let errorMessage;
-    switch (err.message) {
-      case "Empty file":
-        errorMessage =
-          "The file you are trying to upload is empty, please try again with other file";
-        break;
-      default:
-        errorMessage =
-          "Failed to upload file. Please check the file format and try again.";
-        break;
-    }
-
     // We send the error message to the user
     return res.status(400).json({
       errors: [
         {
-          msg: errorMessage,
+          msg: err.message,
           path: "file",
         },
       ],
     });
   }
 
-
-  //We want to save the name of the file without the extension
-  const nameWithoutExt = fileExtension
-    ? originalName.slice(0, -fileExtension.length)
-    : originalName;
-
-  const imgLink = uploadResult.secure_url;
-
   await postNewFile({
-    name: nameWithoutExt,
-    link: imgLink,
+    name: uploadInfo.nameWithoutExt,
+    link: uploadInfo.imgLink,
     folderId: parseInt(req.params.mainFolderId),
     userId: req.user.id,
     size: req.file.size,
-    extension: fileExtension,
+    extension: uploadInfo.fileExtension,
   });
+
   res.status(201).json({ message: "File created successfully" });
 }
 
