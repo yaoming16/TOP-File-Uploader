@@ -65,7 +65,13 @@ switch (true) {
 };
 %>
 
-<article class="file-container">
+<article
+  class="file-container"
+  data-id="<%= file.id %>"
+  data-type="file"
+  data-name="<%= file.name %>"
+  data-extension="<%=file.extension%>"
+>
   <div class="file-name-div">
     <%- include(svgRoute) %>
     <a href="/files/<%= file.id %>/file"><%= file.name %></a>

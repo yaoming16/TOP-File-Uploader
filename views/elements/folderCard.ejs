@@ -11,7 +11,7 @@ const date = new Date(folder.creationDate);
 const dateDisplay = date.toLocaleTimeString(undefined,options)
 %>
 
-<article class="file-container">
+<article class="file-container" data-id="<%= folder.id %>" data-type="folder" data-name="<%= folder.name %>">
   <div class="file-name-div">
     <%- include("../svgs/folderSvg.ejs") %>
     <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>

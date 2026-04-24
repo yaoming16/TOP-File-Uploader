@@ -36,7 +36,7 @@ model Folder {
 
   // Self-relation for parent/child folders
   mainFolderId Int?     // If this is NULL, it means this is a main folder
-  mainFolder   Folder?  @relation("subMainFolder", fields: [mainFolderId], references: [id])
+  mainFolder   Folder?  @relation("subMainFolder", fields: [mainFolderId], references: [id], onDelete: Cascade)
   subFolders   Folder[] @relation("subMainFolder")
 }
 
@@ -47,7 +47,7 @@ model File {
   creationDate DateTime @default(now())
   size Int
   extension String
-  folder Folder @relation(fields: [folderId], references: [id])
+  folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId Int
 
   // Link to the user who owns it

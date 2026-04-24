@@ -69,6 +69,18 @@ async function getFileById(fileId, userId) {
   });
 }
 
+async function deleteFile(fileId, userId) {
+    return await prisma.file.delete({
+    where: { id: fileId, userId: userId },
+  });
+}
+
+async function deleteFolder(fileId, userId) {
+    return await prisma.file.delete({
+    where: { id: fileId, userId: userId },
+  });
+}
+
 module.exports = {
   getUserByEmail,
   getUserById,
@@ -78,4 +90,6 @@ module.exports = {
   postNewFolder,
   postNewFile,
   getFileById,
+  deleteFile,
+  deleteFolder
 };

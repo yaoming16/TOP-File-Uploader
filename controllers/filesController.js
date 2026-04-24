@@ -15,15 +15,6 @@ const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
 ];
 
-function checkAuth(req, res) {
-  //If user is not logged In we will send them to the log in page.
-  if (!req.isAuthenticated()) {
-    res.redirect("/logIn");
-    return false;
-  }
-  return true;
-}
-
 //Only returns the folder of id req.paras.id if current user is the owner of the requested folder.
 //Otherwise returns null
 async function getFolder(req) {
@@ -39,9 +30,6 @@ async function getFolder(req) {
 }
 
 async function getFiles(req, res) {
-  //If user is not logged In we will send them to the log in page.
-  if (!checkAuth(req, res)) return;
-
   const folder = await getFolder(req);
 
   if (!folder) {
@@ -67,9 +55,6 @@ async function getFiles(req, res) {
 }
 
 async function postFolder(req, res) {
-  //If user is not logged In we will send them to the log in page.
-  if (!checkAuth(req, res)) return;
-
   //Validate folder input
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -86,9 +71,6 @@ async function postFolder(req, res) {
 }
 
 async function postFile(req, res) {
-  //If user is not logged In we will send them to the log in page.
-  if (!checkAuth(req, res)) return;
-
   if (!req.file) {
     return res.status(400).json({
       errors: [{ msg: "Please upload a file", path: "file" }],
@@ -106,6 +88,7 @@ async function postFile(req, res) {
   try {
     uploadResult = await uploadToCloudinary(req.file.buffer, newFileName);
   } catch (err) {
+    // error example: { message: 'Empty file', name: 'Error', http_code: 400 }
     console.error("Cloudinary Upload Failed:", err);
 
     //First we set the message based on the error message that cloudinary returned
@@ -132,7 +115,6 @@ async function postFile(req, res) {
     });
   }
 
-  // { message: 'Empty file', name: 'Error', http_code: 400 }
 
   //We want to save the name of the file without the extension
   const nameWithoutExt = fileExtension
@@ -153,9 +135,6 @@ async function postFile(req, res) {
 }
 
 async function getOneFile(req, res) {
-  //If user is not logged In we will send them to the log in page.
-  if (!checkAuth(req, res)) return;
-
   // File will be null if the file with id req.params.fileId isnt owned by current user
   const file = await getFileById(parseInt(req.params.fileId), req.user.id);
   if (!file) return res.status(403).send("Unauthorized");
