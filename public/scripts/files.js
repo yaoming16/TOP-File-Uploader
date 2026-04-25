@@ -1,4 +1,4 @@
-import { sendFormData, addError, clearError } from "./aux.js";
+import { sendFormData, addError, clearError, customFetch } from "./aux.js";
 
 //Folders
 
@@ -58,7 +58,6 @@ const folderContentContainer = document.getElementById(
 );
 
 folderContentContainer.addEventListener("contextmenu", (e) => {
-
   //if (e.target.classList.contains('file-container')) return;
 
   // Whe get the nearest file-container from where the user clicked (usually should be the parent article of the element the user clicked)
@@ -67,7 +66,7 @@ folderContentContainer.addEventListener("contextmenu", (e) => {
   if (clickedItem) {
     // Now we save the id of the file/folder and type on the menu data-id and data-type attribute for future use
     e.preventDefault();
-    const id = clickedItem.dataset.id; 
+    const id = clickedItem.dataset.id;
     const type = clickedItem.dataset.type;
     const name = clickedItem.dataset.name;
     const extension = clickedItem.dataset.extension;
@@ -83,7 +82,6 @@ folderContentContainer.addEventListener("contextmenu", (e) => {
     menu.style.left = `${e.pageX}px`;
     menu.style.top = `${e.pageY}px`;
   }
-
 });
 
 //If user clicks anywhere else we hide the menu
@@ -92,15 +90,27 @@ document.addEventListener("click", () => {
 });
 
 // Open Delete Modal
-const deleteModal = document.getElementById("deleteModal");
 const openDeleteModalBtn = document.getElementById("openDeleteModalBtn");
 const fileToDeleteSpan = document.getElementById("fileToDeleteName");
 
 openDeleteModalBtn.addEventListener("click", () => {
   const fileName = menu.dataset.name;
   const extension = menu.dataset.extension;
-  fileToDeleteSpan.textContent = extension? fileName + extension : fileName;
-})
+  fileToDeleteSpan.textContent = extension ? fileName + extension : fileName;
+});
 
+// Delete confirmation
+const confirmDelete = document.getElementById("confirmDelete");
 
-// Delete Modal
+confirmDelete.addEventListener("click", async () => {
+  const id = menu.dataset.id;
+  const type = menu.dataset.type;
+
+  if (type === "file" || type === "folder") {
+    const res = await customFetch(
+      `/files/delete/${id}/${type}`,
+      "DELETE",
+      window.location.href,
+    );
+  }
+});

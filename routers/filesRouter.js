@@ -6,9 +6,9 @@ const multer = require("multer");
 const filesRouter = Router();
 
 const storage = multer.memoryStorage();
-const upload = multer({ 
+const upload = multer({
   storage: storage,
-  limits: { fileSize: 50 * 1024 * 1024 } // 50 MB limit
+  limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB limit
 });
 
 filesRouter.use(checkAuth);
@@ -26,5 +26,7 @@ filesRouter.post(
   filesController.postFile,
 );
 filesRouter.get("/:fileId/file", filesController.getOneFile);
+filesRouter.delete("/delete/:fileId/file", filesController.deleteOneFile);
+filesRouter.delete("/delete/:folderId/folder", filesController.deleteOneFolder);
 
 module.exports = filesRouter;

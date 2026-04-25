@@ -58,7 +58,7 @@ async function postNewFile(newFile) {
       folderId: newFile.folderId,
       userId: newFile.userId,
       size: newFile.size,
-      extension: newFile.extension
+      extension: newFile.extension,
     },
   });
 }
@@ -70,15 +70,30 @@ async function getFileById(fileId, userId) {
 }
 
 async function deleteFile(fileId, userId) {
+  try {
     return await prisma.file.delete({
-    where: { id: fileId, userId: userId },
-  });
+      where: { id: fileId, userId: userId },
+    });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return null;
+    }
+    throw err;
+  }
 }
 
-async function deleteFolder(fileId, userId) {
-    return await prisma.file.delete({
-    where: { id: fileId, userId: userId },
-  });
+async function deleteFolder(folderId, userId) {
+  try {
+    return await prisma.folder.delete({
+      where: { id: folderId, userId: userId },
+      include: { subFolders: true, files: true },
+    });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return null;
+    }
+    throw err;
+  }
 }
 
 module.exports = {
@@ -91,5 +106,5 @@ module.exports = {
   postNewFile,
   getFileById,
   deleteFile,
-  deleteFolder
+  deleteFolder,
 };

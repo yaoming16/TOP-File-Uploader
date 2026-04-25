@@ -5,9 +5,15 @@ const {
   getFolderById,
   postNewFile,
   getFileById,
+  deleteFile,
+  deleteFolder,
 } = require("../database/queries.js");
 const https = require("https");
-const { handleFileUpload } = require("../services/fileService.js");
+const {
+  handleFileUpload,
+  handleFileDeletion,
+  handleFolderDeletion,
+} = require("../services/fileService.js");
 
 const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
@@ -125,10 +131,50 @@ async function getOneFile(req, res) {
     });
 }
 
+async function deleteOneFile(req, res) {
+  try {
+    const success = await handleFileDeletion(
+      parseInt(req.params.fileId),
+      req.user.id,
+    );
+
+    if (!success) {
+      return res.status(403).json({ error: "Unauthorized or file not found" });
+    }
+
+    return res.status(200).json({ message: "File successfully deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to delete the file" });
+  }
+}
+
+async function deleteOneFolder(req, res) {
+  try {
+    const success = await handleFolderDeletion(
+      parseInt(req.params.folderId),
+      req.user.id,
+    );
+
+    if (!success) {
+      return res
+        .status(403)
+        .json({ error: "error: Unauthorized or file/folder not found" });
+    }
+
+    return res.status(200).json({ message: "Folder successfully deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Failed to delete the folder" });
+  }
+}
+
 module.exports = {
   folderValidation,
   getFiles,
   postFolder,
   postFile,
   getOneFile,
+  deleteOneFile,
+  deleteOneFolder,
 };

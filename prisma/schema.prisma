@@ -36,7 +36,7 @@ model Folder {
 
   // Self-relation for parent/child folders
   mainFolderId Int?     // If this is NULL, it means this is a main folder
-  mainFolder   Folder?  @relation("subMainFolder", fields: [mainFolderId], references: [id], onDelete: Cascade)
+  mainFolder   Folder?  @relation("subMainFolder", fields: [mainFolderId], references: [id])
   subFolders   Folder[] @relation("subMainFolder")
 }
 

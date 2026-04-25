@@ -1,6 +1,10 @@
 const path = require("path");
 const { randomUUID } = require("crypto");
-const { uploadToCloudinary } = require("../lib/cloudinary.js");
+const {
+  uploadToCloudinary,
+  deleteCloudinaryFile,
+} = require("../lib/cloudinary.js");
+const { deleteFolder, deleteFile } = require("../database/queries.js");
 
 async function handleFileUpload(fileBuffer, originalName) {
   // Use randomUUID to generate a unique name for the file
@@ -45,6 +49,54 @@ async function handleFileUpload(fileBuffer, originalName) {
   };
 }
 
+async function handleFileDeletion(fileId, userId) {
+  //Check if file exists and belongs to the user
+  const deletedFile = await deleteFile(fileId, userId);
+  if (!deletedFile) {
+    return false; // Tells the controller it failed authorization
+  }
+
+  //Delete from Cloudinary second
+  try {
+    await deleteCloudinaryFile(deletedFile.link);
+  } catch (cloudinaryError) {
+    console.error("Cloudinary failed to delete file:", cloudinaryError);
+  }
+  return true;
+}
+
+async function handleFolderDeletion(folderId, userId) {
+  const deletedFolder = await deleteFolder(folderId, userId);
+  if (!deletedFolder) {
+    return false; // Tells the controller it failed authorization
+  }
+
+  //We need to delete all cloudinary files inside the folder
+  // Files are deleted in the db on cascade when the folder they ar einside are deleted
+  for (let i = 0; i < deletedFolder.files.length; i++) {
+    try {
+      await deleteCloudinaryFile(deletedFolder.files[i].link);
+    } catch (cloudinaryError) {
+      console.error(
+        `Cloudinary failed to delete file of Id ${deletedFolder.files[i].id}:`,
+        cloudinaryError,
+      );
+    }
+  }
+
+  //We also need to delete all files in subfolders
+  // If the folder has subfolders we will recursively call handleFolderDeletion on each
+  // When no more subfolders it returns.
+  if (deletedFolder.subFolders.length > 0) {
+    for (let j = 0; j < deletedFolder.subFolders.length; j++) {
+      handleFolderDeletion(deletedFolder.subFolders[j].id, userId);
+    }
+  }
+  return true;
+}
+
 module.exports = {
   handleFileUpload,
+  handleFileDeletion,
+  handleFolderDeletion,
 };
