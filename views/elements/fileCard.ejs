@@ -72,9 +72,20 @@ switch (true) {
   data-name="<%= file.name %>"
   data-extension="<%=file.extension%>"
 >
-  <div class="file-name-div">
-    <%- include(svgRoute) %>
-    <a href="/files/<%= file.id %>/file"><%= file.name %></a>
+  <div class="file-name file-name-div">
+    <div class="file-name">
+      <%- include(svgRoute) %>
+      <a href="/files/<%= file.id %>/file"><%= file.name %></a>
+    </div>
+    <div class="file-name">
+      <button
+        type="button"
+        aria-label="More Options for <%= file.name %>"
+        class="optionsBtn"
+      >
+        <%- include("../svgs/threeDots.ejs", {btnClass: "optionsBtn"}) %>
+      </button>
+    </div>
   </div>
   <p><%= dateDisplay %></p>
   <p><%= displaySize.toFixed(2) + " " + unit %></p>

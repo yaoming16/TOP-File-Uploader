@@ -18,11 +18,15 @@
   border-radius: 4px;
 }
 
-.file-name-div {
+.file-name {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+}
+
+.file-name-div {
+  justify-content: space-between;
 }
 
 .header-row p {
@@ -41,4 +45,15 @@
   list-style: none; 
   margin: 0; 
   padding: 10px;
+}
+
+.optionsBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.optionsBtn:hover {
+  background-color: var(--color-primary-light);
 }

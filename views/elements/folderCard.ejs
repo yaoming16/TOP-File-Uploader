@@ -11,10 +11,26 @@ const date = new Date(folder.creationDate);
 const dateDisplay = date.toLocaleTimeString(undefined,options)
 %>
 
-<article class="file-container" data-id="<%= folder.id %>" data-type="folder" data-name="<%= folder.name %>">
-  <div class="file-name-div">
-    <%- include("../svgs/folderSvg.ejs") %>
-    <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
+<article
+  class="file-container"
+  data-id="<%= folder.id %>"
+  data-type="folder"
+  data-name="<%= folder.name %>"
+>
+  <div class="file-name-div file-name">
+    <div class="file-name">
+      <%- include("../svgs/folderSvg.ejs") %>
+      <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
+    </div>
+    <div class="file-name">
+      <button
+        type="button"
+        aria-label="More Options for <%= folder.name %>"
+        class="optionsBtn"
+      >
+        <%- include("../svgs/threeDots.ejs", {btnClass: "optionsBtn"}) %>
+      </button>
+    </div>
   </div>
   <p><%= dateDisplay %></p>
 </article>
