@@ -13,6 +13,7 @@ const upload = multer({
 
 filesRouter.use(checkAuth);
 
+//Folders
 filesRouter.get("/", filesController.getFiles);
 filesRouter.get("/:folderId/folder", filesController.getFiles);
 filesRouter.post(
@@ -20,6 +21,14 @@ filesRouter.post(
   filesController.folderValidation,
   filesController.postFolder,
 );
+filesRouter.delete("/delete/:folderId/folder", filesController.deleteOneFolder);
+filesRouter.put(
+  "/update/:folderId/folder",
+  filesController.updateValidation,
+  filesController.updateOneFolder,
+);
+
+// Files
 filesRouter.post(
   "/add/:mainFolderId/file",
   upload.single("file"),
@@ -27,6 +36,10 @@ filesRouter.post(
 );
 filesRouter.get("/:fileId/file", filesController.getOneFile);
 filesRouter.delete("/delete/:fileId/file", filesController.deleteOneFile);
-filesRouter.delete("/delete/:folderId/folder", filesController.deleteOneFolder);
+filesRouter.put(
+  "/update/:fileId/file",
+  filesController.updateValidation,
+  filesController.updateOneFile,
+);
 
 module.exports = filesRouter;

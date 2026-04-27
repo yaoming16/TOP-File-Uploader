@@ -5,8 +5,8 @@ const {
   getFolderById,
   postNewFile,
   getFileById,
-  deleteFile,
-  deleteFolder,
+  updateFolder,
+  updateFile,
 } = require("../database/queries.js");
 const https = require("https");
 const {
@@ -17,6 +17,10 @@ const {
 
 const folderValidation = [
   body("folderName").notEmpty().withMessage("Folder name is required"),
+];
+
+const updateValidation = [
+  body("newName").notEmpty().withMessage("The name can't be left empty"),
 ];
 
 //Only returns the folder of id req.paras.id if current user is the owner of the requested folder.
@@ -169,12 +173,59 @@ async function deleteOneFolder(req, res) {
   }
 }
 
+async function updateOneFolder(req, res) {
+  //Validate folder input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const updatedFolder = await updateFolder(
+    parseInt(req.params.folderId),
+    req.user.id,
+    req.body.newName,
+  );
+
+  if (!updatedFolder) {
+    return res
+      .status(403)
+      .json({ error: "error: Unauthorized or folder not found" });
+  }
+
+  return res.status(200).json({ message: "Folder successfully updated" });
+}
+
+async function updateOneFile(req, res) {
+  //Validate folder input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const updatedFile = await updateFile(
+    parseInt(req.params.fileId),
+    req.user.id,
+    req.body.newName,
+  );
+
+  if (!updatedFile) {
+    return res
+      .status(403)
+      .json({ error: "error: Unauthorized or file not found" });
+  }
+
+  return res.status(200).json({ message: "Folder successfully updated" });
+}
+
 module.exports = {
   folderValidation,
+  updateValidation,
   getFiles,
   postFolder,
   postFile,
   getOneFile,
   deleteOneFile,
   deleteOneFolder,
+  updateOneFolder,
+  updateOneFile,
 };

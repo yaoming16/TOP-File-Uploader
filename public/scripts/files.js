@@ -89,7 +89,7 @@ document.addEventListener("click", () => {
   menu.style.display = "none";
 });
 
-// Open Delete Modal
+//When Delete Modal opens
 const openDeleteModalBtn = document.getElementById("openDeleteModalBtn");
 const fileToDeleteSpan = document.getElementById("fileToDeleteName");
 
@@ -112,5 +112,41 @@ confirmDelete.addEventListener("click", async () => {
       "DELETE",
       window.location.href,
     );
+  }
+});
+
+//When Update folder/file opens
+const openUpdateModalBtn = document.getElementById("openUpdateModalBtn");
+const newNameInput = document.getElementById("newName");
+const newNameError = document.getElementById("newNameError");
+
+openUpdateModalBtn.addEventListener("click", () => {
+  const fileName = menu.dataset.name;
+  newNameInput.value = fileName;
+});
+
+//Update confirmation
+const updateForm = document.getElementById("updateForm");
+
+updateForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  clearError(newNameInput, newNameError);
+
+  const id = menu.dataset.id;
+  const type = menu.dataset.type;
+
+  if (type === "file" || type === "folder") {
+    const errors = await sendFormData(
+      e,
+      `/files/update/${id}/${type}`,
+      "PUT",
+      window.location.href,
+    );
+    if (errors) {
+      for (const e of errors) {
+        addError(newNameInput, newNameError, e.msg);
+      }
+    }
   }
 });

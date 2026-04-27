@@ -96,6 +96,34 @@ async function deleteFolder(folderId, userId) {
   }
 }
 
+async function updateFolder(folderId, userId, newName) {
+  try {
+    return await prisma.folder.update({
+      where: { id: folderId, userId: userId },
+      data: { name: newName },
+    });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return null;
+    }
+    throw err;
+  }
+}
+
+async function updateFile(fileId, userId, newName) {
+  try {
+    return await prisma.file.update({
+      where: { id: fileId, userId: userId },
+      data: { name: newName },
+    });
+  } catch (err) {
+    if (err.code === "P2025") {
+      return null;
+    }
+    throw err;
+  }
+}
+
 module.exports = {
   getUserByEmail,
   getUserById,
@@ -107,4 +135,6 @@ module.exports = {
   getFileById,
   deleteFile,
   deleteFolder,
+  updateFolder,
+  updateFile,
 };

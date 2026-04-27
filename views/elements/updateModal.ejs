@@ -1,0 +1,19 @@
+<dialog id="updateModal">
+  <form id="updateForm">
+    <%- include("./input.ejs", {id: "newName", text: "New Name", type: "text",
+    name: "newName"}) %>
+    <div>
+      <button commandfor="updateModal" command="close" type="button">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        id="confirmUpdate"
+        command="close"
+        commandfor="updateModal"
+      >
+        Rename
+      </button>
+    </div>
+  </form>
+</dialog>

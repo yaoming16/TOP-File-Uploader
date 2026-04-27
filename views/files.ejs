@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/index.css"> 
-    <link rel="stylesheet" href="/styles/header.css">
-    <link rel="stylesheet" href="/styles/footer.css">
-    <link rel="stylesheet" href="/styles/files.css">
+    <link rel="stylesheet" href="/styles/index.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/footer.css" />
+    <link rel="stylesheet" href="/styles/files.css" />
     <script src="/scripts/files.js" type="module" defer></script>
     <title>FileSpace - Files</title>
   </head>
@@ -16,6 +16,7 @@
       <h1><%= currentUser.name + ' ' + currentUser.lastName %></h1>
       <%- include("./elements/selectMenu.ejs") %>
       <%- include("./elements/deleteModal.ejs") %>
+      <%- include("./elements/updateModal.ejs") %>
       <div class="btn-div-files">
         <button
           type="button"
@@ -37,7 +38,6 @@
       <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "folder"}) %>
       <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "file"}) %>
       <section aria-label="Folder Contents" id="folderContentContainer">
-
         <!-- Titles -->
         <ul>
           <li>
@@ -48,23 +48,22 @@
               <p>Extension</p>
             </div>
           </li>
-          
+
           <!-- Folders -->
           <% folders.forEach((folder) => { %>
           <li>
             <%- include("./elements/folderCard.ejs", {folder: folder}) %>
           </li>
           <% }) %>
-          
+
           <!-- Files -->
           <% files.forEach((file) => { %>
-            <li>
-              <%- include("./elements/fileCard.ejs", {file : file}) %>
-            </li>
-            <% }) %>
-          </ul>
+          <li>
+            <%- include("./elements/fileCard.ejs", {file : file}) %>
+          </li>
+          <% }) %>
+        </ul>
       </section>
-
     </main>
     <%- include("./elements/footer.ejs") %>
 

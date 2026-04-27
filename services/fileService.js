@@ -72,7 +72,7 @@ async function handleFolderDeletion(folderId, userId) {
   }
 
   //We need to delete all cloudinary files inside the folder
-  // Files are deleted in the db on cascade when the folder they ar einside are deleted
+  // Files are deleted in the db on cascade when the folder they are inside are deleted
   for (let i = 0; i < deletedFolder.files.length; i++) {
     try {
       await deleteCloudinaryFile(deletedFolder.files[i].link);
