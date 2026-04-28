@@ -35,8 +35,9 @@ function openOptionsMenu(e) {
 folderContentContainer.addEventListener("contextmenu", openOptionsMenu);
 
 //If user clicks anywhere else we hide the menu
-document.addEventListener("click", () => {
-  if (menu.style.display === "block") {
+document.addEventListener("click", (e) => {
+  //Close only if already visible and clicked DOM element isnt the button to open the menu 
+  if (menu.style.display === "block" && !e.target.classList.contains("optionsBtn")) {
     menu.style.display = "none";
   }
 });
