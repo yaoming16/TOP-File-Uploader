@@ -7,6 +7,7 @@ const {
   getFileById,
   updateFolder,
   updateFile,
+  getBasicInfoFolderById,
 } = require("../database/queries.js");
 const https = require("https");
 const {
@@ -48,16 +49,38 @@ async function getFiles(req, res) {
     return res.status(404).render("files", {
       folders: rootFolder.subFolders,
       files: rootFolder.files,
-      mainFolderId: rootFolder.id,
+      currentFolderId: rootFolder.id,
+      pathList: [rootFolder.id],
       error:
         "The requested folder does not exist or you do not have permission to view it.",
     });
   }
 
+  //We will return an array with the path to the folder requested. 
+  //We start from the current folder and go back using mainFolderId to get the parent of the current folder and so on 
+  //First element of the array is the current folder
+  let pathList = [];
+  let folderCopy = {
+    mainFolderId: folder.mainFolderId,
+    id: folder.id,
+    name: folder.name,
+  };
+  while (folderCopy.mainFolderId) {
+    pathList.push(folderCopy);
+    folderCopy = await getBasicInfoFolderById(
+      folderCopy.mainFolderId,
+      req.user.id,
+    );
+  }
+
+  //At the end of the while loop folder copy should have the root folder. We add it to the path
+  pathList.push(folderCopy)
+
   return res.render("files", {
     folders: folder.subFolders,
     files: folder.files,
-    mainFolderId: folder.id,
+    currentFolderId: folder.id,
+    pathList: pathList,
     error: null,
   });
 }

@@ -1,0 +1,6 @@
+<div class='path-link-div <%= !showArrow? " last-path-link-div": null %>'>
+  <a href="/files/<%= folder.id %>/folder"><%= folder.name !== "root"? folder.name : "Documents" %></a>
+  <% if (showArrow) { %>
+    <%- include("../svgs/rightArrowSvg.ejs", {classes: "arrow-svg"}) %>
+  <% } %>
+</div>

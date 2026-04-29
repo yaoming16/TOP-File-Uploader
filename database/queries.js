@@ -33,10 +33,18 @@ async function getFolderById(folderId, userId) {
   });
 }
 
+
 async function getMainFolderOfUser(userId) {
   return await prisma.folder.findFirst({
     where: { userId: userId, mainFolderId: null },
     include: { subFolders: true, files: true },
+  });
+}
+
+async function getBasicInfoFolderById(folderId, userId) {
+    return await prisma.folder.findUnique({
+    where: { id: folderId, userId: userId },
+    select: { name: true, mainFolderId: true, id: true },
   });
 }
 
@@ -137,4 +145,5 @@ module.exports = {
   deleteFolder,
   updateFolder,
   updateFile,
+  getBasicInfoFolderById,
 };

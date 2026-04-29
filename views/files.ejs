@@ -18,26 +18,36 @@
       <%- include("./elements/selectMenu.ejs") %>
       <%- include("./elements/deleteModal.ejs") %>
       <%- include("./elements/updateModal.ejs") %>
-      <div class="btn-div-files">
-        <button
-          type="button"
-          id="addFolderBtn"
-          command="show-modal"
-          commandfor="folderModal"
-        >
-          Add Folder
-        </button>
-        <button
-          type="button"
-          id="addFileBtn"
-          command="show-modal"
-          commandfor="fileModal"
-        >
-          Add File
-        </button>
+
+      <div class="first-line-div">
+        <div id="currentFolderPath" class="path-container">
+          <% for(let i = pathList.length - 1; i > -1; i--) { %> <%-
+          include("./elements/navigationLink.ejs", {folder: pathList[i],
+          showArrow: i > 0 }) %> <% } %>
+        </div>
+  
+        <div class="btn-div-files">
+          <button
+            type="button"
+            id="addFolderBtn"
+            command="show-modal"
+            commandfor="folderModal"
+          >
+            Add Folder
+          </button>
+          <button
+            type="button"
+            id="addFileBtn"
+            command="show-modal"
+            commandfor="fileModal"
+          >
+            Add File
+          </button>
+        </div>
+
       </div>
-      <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "folder"}) %>
-      <%- include("./elements/addModal.ejs", {mainFolderId: mainFolderId, type: "file"}) %>
+      <%- include("./elements/addModal.ejs", {currentFolderId: currentFolderId, type: "folder"}) %>
+      <%- include("./elements/addModal.ejs", {currentFolderId: currentFolderId, type: "file"}) %>
       <section aria-label="Folder Contents" id="folderContentContainer">
         <!-- Titles -->
         <ul>

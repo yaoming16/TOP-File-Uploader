@@ -1,5 +1,4 @@
 .btn-div-files {
-  width: 100%;
   margin: 1rem 0;
   display: flex;
   flex-direction: row;
@@ -56,4 +55,45 @@
 
 .optionsBtn:hover {
   background-color: var(--color-primary-light);
+}
+
+.path-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.path-link-div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.path-link-div a {
+  text-decoration: none;
+  color: var(--color-primary);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.path-link-div a:hover {
+  color: var(--color-primary-hover);
+  background-color: var(--color-primary-light);
+}
+
+.last-path-link-div {
+  color: red;
+  font-weight: bold;
+}
+
+.first-line-div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
 }
