@@ -8,7 +8,7 @@
 
 .file-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 3fr repeat(3, 1fr);
   grid-template-rows: 1fr;
   align-items: center;
   gap: 0.5rem;
@@ -23,9 +23,13 @@
   align-items: center;
   gap: 0.5rem;
 }
+.text-wrap {
+  word-break: break-all;
+}
 
 .file-name-div {
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .header-row p {
@@ -83,7 +87,7 @@
   background-color: var(--color-primary-light);
 }
 
-.last-path-link-div {
+.last-path-container {
   color: red;
   font-weight: bold;
 }

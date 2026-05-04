@@ -72,6 +72,12 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
+h3 {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
 a {
   color: var(--color-primary);
   text-decoration: none;

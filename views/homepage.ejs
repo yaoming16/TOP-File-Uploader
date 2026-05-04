@@ -3,16 +3,163 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/index.css"> 
-    <link rel="stylesheet" href="/styles/header.css">
-    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/index.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/footer.css" />
+    <link rel="stylesheet" href="/styles/homePage.css" />
+    <script src="/scripts/homepage.js" defer></script>
     <title>FileSpace - HomePage</title>
   </head>
   <body>
     <%- include("./elements/header.ejs") %>
     <main>
-      <h1>FileSpace</h1>
+      <section class="hero-section homepage-section">
+        <h1 class="hero-title">All Your Files in One Place</h1>
+        <h2 class="hero-subtitle">
+          Store, organize, and access your documents, images, and folders from
+          anywhere
+        </h2>
+        <p class="hero-p">
+          FileSpace is the perfect solution for managing your files in the
+          cloud. Secure and easy to use!
+        </p>
+        <p class="hero-p">Start organizing your files today!</p>
+        <div class="cta-btn-div">
+          <a href="/login" class="cta-btn">Log In</a>
+          <a href="/signup" class="cta-btn">Sign Up</a>
+        </div>
+        <div class="hero-images-div">
+          <img
+            src="/images/undraw_private-files.svg"
+            alt="A man saving his files in a secure folder"
+            class="hero-svg"
+          />
+          <img
+            src="/images/undraw_my-personal-files.svg"
+            alt="A man browsing his personal files"
+            class="hero-svg"
+          />
+        </div>
+      </section>
+      
+      <dialog id="imgDialog">
+        <div class="dialog-img-container" id="imgContainer">
+        </div>
+        <button type="button" command="close" commandfor="imgDialog">
+          <!-- prettier-ignore -->
+          <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z" fill="#0F1729"></path> </g></svg>
+        </button>
+      </dialog>
+      <section class="example-section homepage-section">
+        <h2>See It In Action</h2>
+        <div class="mockup-img-div" id="mockupImagesDiv">
+          <img
+            src="/images/files-view-mockup.png"
+            alt="A mockup of the files view showing file paths, upload button, and folder creation"
+            class="example-image"
+          />
+          <img
+            src="/images/files-view-mockup-2.png"
+            alt="Another mockup of the files view showing the upload folder functionality"
+            class="example-image"
+          />
+          <img
+            src="/images/files-view-mockup-3.png"
+            alt="A third mockup of the files view showing upload file functionality"
+            class="example-image"
+          />
+          <img
+            src="/images/files-view-mockup-4.png"
+            alt="A fourth mockup of the files view showing the options menu"
+            class="example-image"
+          />
+        </div>
+      </section>
+
+      <section class="features-section homepage-section">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+          <div class="feature-item">
+            <span class="feature-icon">📁</span>
+            <h3>Folder Organization</h3>
+            <p>Create unlimited nested folders to keep your work organized.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">☁️</span>
+            <h3>Cloud Storage</h3>
+            <p>
+              Files are securely uploaded and stored in the cloud (Cloudinary).
+            </p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🔐</span>
+            <h3>Secure Access</h3>
+            <p>
+              Your data is private and secured with password hashing (Bcrypt)
+              and session authentication.
+            </p>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📊</span>
+            <h3>File Analytics</h3>
+            <p>
+              Keep track of file sizes, extensions, and upload times easily.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tech-section homepage-section">
+        <h2>About This Project</h2>
+        <p>
+          This project was built using Node.js, Express, PostgreSQL, Prisma,
+          EJS, and CSS. It serves as a secure cloud storage solution for users
+          to manage their files and folders efficiently.
+        </p>
+        <a
+          href="https://github.com/yaoming16/TOP-File-Uploader"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cta-btn"
+          >View on GitHub</a
+        >
+      </section>
     </main>
     <%- include("./elements/footer.ejs") %>
   </body>
 </html>
+
+<!-- 
+Since your project looks like a cloud storage application (like Google Drive or Dropbox) built for The Odin Project, your homepage (homepage.ejs) usually serves as the Landing Page for non-authenticated users.
+
+Here are several great ideas on what you can show on your homepage to make it look professional and appealing for a developer portfolio:
+
+1. Hero Section (The First Impression)
+This should be right at the top of your <main> tag. It needs to grab attention and quickly explain what the app does.
+
+Headline: A catchy title like "Secure Cloud Storage for Everyone" or "All Your Files in One Place."
+Subheadline: A brief description (e.g., "Store, organize, and access your documents, images, and folders from anywhere.")
+Call-to-Action (CTA) Buttons: Prominent buttons linking to your Sign Up (/sign-up) and Log In (/log-in) routes.
+Hero Image/Illustration: A nice SVG vector graphic (you can find free ones on unDraw) of someone interacting with files or a cloud.
+2. App Preview / Mockup
+Often, users want to see what the app looks like before signing up.
+
+Include a screenshot or a stylized mockup of your views/files.ejs view to show off the cool file dashboard you built, demonstrating that users can see their file paths, upload files, and create folders.
+3. Features Section (Grid Layout)
+Highlight the key functionalities of your application using a CSS Grid (similar to how you styled the files). You can use simple icons alongside small descriptive text.
+
+📁 Folder Organization: "Create unlimited nested folders to keep your work organized."
+☁️ Cloud Storage: "Files are securely uploaded and stored in the cloud (Cloudinary)."
+🔐 Secure Access: "Your data is private and secured with password hashing (Bcrypt) and session authentication."
+📊 File Analytics: "Keep track of file sizes, extensions, and upload times easily."
+4. Technical Stack / "About this Project" Section
+Since this is likely a portfolio piece for The Odin Project, recruiters or other developers will appreciate a section detailing how it was built.
+
+Mention the technologies: Node.js, Express, PostgreSQL, Prisma, EJS, and Cloudinary.
+Include a link to the project's GitHub repository so visitors can easily review your codebase.
+5. Smart Routing (Optional but Recommended)
+For technical implementation, consider adding a middleware check on your root route (/).
+
+If a user is already authenticated (has an active session), automatically redirect them to their dashboard (/files).
+If they are not authenticated, serve views/homepage.ejs to show them the landing page described above.
+-->
