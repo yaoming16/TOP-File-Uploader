@@ -69,3 +69,4 @@ folderContentContainer.addEventListener("click", (e) => {
     openOptionsMenu(e);
   }
 });
+

@@ -16,7 +16,6 @@ function localStrategy() {
         if (!user) {
           return done(null, false, { message: "Invalid email" });
         }
-        console.log(password, user);
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
           // passwords do not match!
