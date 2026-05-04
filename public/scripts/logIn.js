@@ -12,7 +12,7 @@ form.addEventListener("submit", async (e) => {
   clearError(emailInput, emailError);
   clearError(passwordInput, passwordError);
 
-  const errors = await sendFormData(e, "/login", "POST", "/");
+  const errors = await sendFormData(e, "/login", "POST", "/files");
   if (errors) {
     for (const e of errors) {
       if (e.path === "email" || e.msg === "Invalid email") {

@@ -42,7 +42,7 @@
         </div>
       </section>
       
-      <dialog id="imgDialog">
+      <dialog id="imgDialog" closedby="any">
         <div class="dialog-img-container" id="imgContainer">
         </div>
         <button type="button" command="close" commandfor="imgDialog">
@@ -128,38 +128,3 @@
     <%- include("./elements/footer.ejs") %>
   </body>
 </html>
-
-<!-- 
-Since your project looks like a cloud storage application (like Google Drive or Dropbox) built for The Odin Project, your homepage (homepage.ejs) usually serves as the Landing Page for non-authenticated users.
-
-Here are several great ideas on what you can show on your homepage to make it look professional and appealing for a developer portfolio:
-
-1. Hero Section (The First Impression)
-This should be right at the top of your <main> tag. It needs to grab attention and quickly explain what the app does.
-
-Headline: A catchy title like "Secure Cloud Storage for Everyone" or "All Your Files in One Place."
-Subheadline: A brief description (e.g., "Store, organize, and access your documents, images, and folders from anywhere.")
-Call-to-Action (CTA) Buttons: Prominent buttons linking to your Sign Up (/sign-up) and Log In (/log-in) routes.
-Hero Image/Illustration: A nice SVG vector graphic (you can find free ones on unDraw) of someone interacting with files or a cloud.
-2. App Preview / Mockup
-Often, users want to see what the app looks like before signing up.
-
-Include a screenshot or a stylized mockup of your views/files.ejs view to show off the cool file dashboard you built, demonstrating that users can see their file paths, upload files, and create folders.
-3. Features Section (Grid Layout)
-Highlight the key functionalities of your application using a CSS Grid (similar to how you styled the files). You can use simple icons alongside small descriptive text.
-
-📁 Folder Organization: "Create unlimited nested folders to keep your work organized."
-☁️ Cloud Storage: "Files are securely uploaded and stored in the cloud (Cloudinary)."
-🔐 Secure Access: "Your data is private and secured with password hashing (Bcrypt) and session authentication."
-📊 File Analytics: "Keep track of file sizes, extensions, and upload times easily."
-4. Technical Stack / "About this Project" Section
-Since this is likely a portfolio piece for The Odin Project, recruiters or other developers will appreciate a section detailing how it was built.
-
-Mention the technologies: Node.js, Express, PostgreSQL, Prisma, EJS, and Cloudinary.
-Include a link to the project's GitHub repository so visitors can easily review your codebase.
-5. Smart Routing (Optional but Recommended)
-For technical implementation, consider adding a middleware check on your root route (/).
-
-If a user is already authenticated (has an active session), automatically redirect them to their dashboard (/files).
-If they are not authenticated, serve views/homepage.ejs to show them the landing page described above.
--->

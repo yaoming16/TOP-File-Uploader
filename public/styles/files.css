@@ -101,3 +101,7 @@
   gap: 0.5rem;
   justify-content: space-between;
 }
+
+.last-path-link-div {
+  font-weight: bold;
+}

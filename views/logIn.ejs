@@ -12,9 +12,8 @@
   <body>
     <%- include("./elements/header.ejs") %>
     <main>
-      <h1>FileSpace</h1>
-      <form id="loginForm" autocomplete="off">
-        <p>Log In</p>
+      <h1 class="form-title">Log In</h1>
+      <form id="loginForm" class="form" autocomplete="off">
         <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"}) %>
         <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"}) %>
         <button type="submit">Log In</button>

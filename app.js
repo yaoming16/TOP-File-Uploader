@@ -67,6 +67,10 @@ passport.deserializeUser(async (id, done) => {
 
 //Pages views
 app.get("/", (req, res) => {
+  // If user already logged in we will redirect him to the files page, otherwise we will render the homepage
+  if (req.user) {
+    return res.redirect("/files");
+  }
   res.render("homepage");
 });
 
