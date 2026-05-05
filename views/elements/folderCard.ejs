@@ -16,11 +16,12 @@ const dateDisplay = date.toLocaleTimeString(undefined,options)
   data-id="<%= folder.id %>"
   data-type="folder"
   data-name="<%= folder.name %>"
+  data-date="<%= dateDisplay %>"
 >
   <div class="file-name-div file-name">
-    <div class="file-name">
+    <div class="file-name name-container">
       <%- include("../svgs/folderSvg.ejs") %>
-      <a href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
+      <a class="overflow-hide" href="/files/<%= folder.id %>/folder"> <%= folder.name %> </a>
     </div>
     <div class="file-name">
       <button
@@ -32,5 +33,5 @@ const dateDisplay = date.toLocaleTimeString(undefined,options)
       </button>
     </div>
   </div>
-  <p><%= dateDisplay %></p>
+  <p class="no-wrap overflow-hide"><%= dateDisplay %></p>
 </article>

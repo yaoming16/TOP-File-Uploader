@@ -8,9 +8,8 @@
 
 .file-container {
   display: grid;
-  grid-template-columns: 3fr repeat(3, 1fr);
+  grid-template-columns: minmax(250px, 3fr) minmax(150px, 1fr) minmax(100px, 1fr) minmax(100px, 1fr);
   grid-template-rows: 1fr;
-  align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
   border-bottom: 1px solid var(--color-border);
@@ -22,14 +21,35 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
 }
+
+.name-container {
+  min-width: 0;
+  flex: 1; /* Allow it to take available space pushing options to right */
+}
+
+.name-container svg {
+  flex-shrink: 0; /* Keep the file/folder icon from shrinking */
+}
+
+.overflow-hide {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
 .text-wrap {
   word-break: break-all;
 }
 
 .file-name-div {
   justify-content: space-between;
-  flex-wrap: wrap;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
 
 .header-row p {
@@ -50,6 +70,20 @@
   padding: 10px;
 }
 
+.menu-item {
+  padding: 5px 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: var(--color-primary-light);
+}
+
+.menu-item button {
+  width: 100%;
+}
+
 .optionsBtn {
   background: none;
   border: none;
@@ -63,6 +97,7 @@
 
 .path-container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
@@ -70,11 +105,15 @@
 
 .path-link-div {
   display: flex;
-  align-items: center;
   gap: 0.5rem;
 }
 
 .path-link-div a {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  align-items: center;
   text-decoration: none;
   color: var(--color-primary);
   border-radius: 4px;
@@ -105,3 +144,35 @@
 .last-path-link-div {
   font-weight: bold;
 }
+
+#folderContentContainer {
+  overflow: auto;
+}
+
+#folderContentContainer ul {
+  min-width: min-content;
+}
+
+/* More info modal */
+
+#moreInfoModal {
+  overflow: visible;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+#moreInfoModal dd {
+  word-break: break-all;
+}
+
+#moreInfoModal dt {
+  font-weight: bold;
+}
+
+#moreInfoModal div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  vertical-align: middle;
+  justify-content: space-between;
+}
+

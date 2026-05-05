@@ -151,7 +151,6 @@
   border: none;
   border-radius: 8px;
   padding: clamp(0.5rem, 2vw, 1.5rem);
-  background-color: var(--color-bg-surface);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   overflow: visible;
 }
@@ -164,32 +163,4 @@
   display: block;
 }
 
-#imgDialog button {
-  position: absolute;
-  top: clamp(-10px, -2vw, -15px);
-  right: clamp(-10px, -2vw, -15px);
-  background-color: var(--color-bg-surface);
-  color: var(--color-text-primary);
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  cursor: pointer;
-  width: clamp(35px, 8vw, 45px);
-  height: clamp(35px, 8vw, 45px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  transition: all 0.2s ease-in-out;
-}
-
-#imgDialog button:hover {
-  transform: rotate(360deg);
-  color: var(--color-text-inverse);
-  border-color: var(--color-primary);
-}
-
-#imgDialog svg {
-  width: 32px;
-  height: 32px;
-  fill: currentColor;
-}
+/* Close modal btn styles are in index.css */

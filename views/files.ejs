@@ -18,6 +18,7 @@
       <%- include("./elements/selectMenu.ejs") %>
       <%- include("./elements/deleteModal.ejs") %>
       <%- include("./elements/updateModal.ejs") %>
+      <%- include("./elements/infoModal.ejs") %>
 
       <div class="first-line-div">
         <div id="currentFolderPath" class="path-container">
@@ -48,15 +49,16 @@
       </div>
       <%- include("./elements/addModal.ejs", {currentFolderId: currentFolderId, type: "folder"}) %>
       <%- include("./elements/addModal.ejs", {currentFolderId: currentFolderId, type: "file"}) %>
+
       <section aria-label="Folder Contents" id="folderContentContainer">
         <!-- Titles -->
         <ul>
           <li>
             <div class="file-container header-row">
-              <p>Name</p>
-              <p>Upload Date</p>
-              <p>Size</p>
-              <p>Extension</p>
+              <p class="m-w-300">Name</p>
+              <p class="m-w-150">Upload Date</p>
+              <p class="m-w-100">Size</p>
+              <p class="m-w-100">Extension</p>
             </div>
           </li>
 

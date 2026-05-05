@@ -71,11 +71,13 @@ switch (true) {
   data-type="file"
   data-name="<%= file.name %>"
   data-extension="<%=file.extension%>"
+  data-date="<%= dateDisplay %>"
+  data-size="<%= displaySize.toFixed(2) + " " + unit %>"
 >
-  <div class="file-name file-name-div">
-    <div class="file-name text-wrap">
+  <div class="file-name file-name-div m-w-300">
+    <div class="file-name text-wrap name-container">
       <%- include(svgRoute) %>
-      <a href="/files/<%= file.id %>/file"><%= file.name %></a>
+      <a class="overflow-hide" href="/files/<%= file.id %>/file"><%= file.name %></a>
     </div>
     <div class="file-name">
       <button
@@ -87,7 +89,7 @@ switch (true) {
       </button>
     </div>
   </div>
-  <p><%= dateDisplay %></p>
-  <p><%= displaySize.toFixed(2) + " " + unit %></p>
-  <p><%= file.extension %></p>
+  <p class="no-wrap"><%= dateDisplay %></p>
+  <p class="no-wrap"><%= displaySize.toFixed(2) + " " + unit %></p>
+  <p class="no-wrap"><%= file.extension %></p>
 </article>
