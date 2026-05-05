@@ -1,4 +1,8 @@
-export async function sendFormData(event, fetchUrl, method, redirectUrl) {
+export async function sendFormData(event, fetchUrl, method, redirectUrl, submitBtn = null) {
+  if (submitBtn) {
+    submitBtn.disabled = true;
+  }
+
   const formElement = event.target;
   const formData = new FormData(formElement);
 
@@ -7,15 +11,26 @@ export async function sendFormData(event, fetchUrl, method, redirectUrl) {
   const hasFile = formElement.querySelector("input[type='file']");
   const body = hasFile ? formData : new URLSearchParams(formData);
 
-  const response = await customFetch(fetchUrl, method, redirectUrl, body);
+
+  const response = await customFetch(fetchUrl, method, redirectUrl, body, null);
+  let toReturn = null;
   if (response && response.errors) {
-    return response.errors;
-  } else {
-    return null;
-  }
+    toReturn =  response.errors;
+
+    //We enable the submit only if there is an error, otherwise the page will reload and it would be pointless
+    if (submitBtn) {
+      submitBtn.disabled = false;
+    }
+  } 
+  
+  return toReturn;
 }
 
-export async function customFetch(fetchUrl, method, redirectUrl, body = null) {
+export async function customFetch(fetchUrl, method, redirectUrl, body = null, submitbtn = null) {
+  if (submitbtn) {
+    submitbtn.disabled = true;
+  }
+  
   try {
 
     const response = await fetch(fetchUrl, {
@@ -28,10 +43,22 @@ export async function customFetch(fetchUrl, method, redirectUrl, body = null) {
       return null;
     } else {
       const errorData = await response.json();
+
+      //We enable the submit only if there is an error, otherwise the page will reload and it would be pointless
+      if (submitbtn) {
+      submitbtn.disabled = false;
+      }
+
       return errorData;
     }
   } catch (error) {
     console.error("Error:", error);
+
+    //We enable the submit only if there is an error, otherwise the page will reload and it would be pointless
+    if (submitbtn) {
+      submitbtn.disabled = false;
+    }
+
     return error;
   }
 }

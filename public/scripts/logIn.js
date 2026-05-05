@@ -1,10 +1,13 @@
 import { sendFormData, addError, clearError } from "./aux.js";
 
 const form = document.getElementById("loginForm");
+const submitBtn = document.getElementById("logInBtn");
+
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 const emailError = document.getElementById("emailError");
 const passwordError = document.getElementById("passwordError");
+
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -12,7 +15,9 @@ form.addEventListener("submit", async (e) => {
   clearError(emailInput, emailError);
   clearError(passwordInput, passwordError);
 
-  const errors = await sendFormData(e, "/login", "POST", "/files");
+
+  const errors = await sendFormData(e, "/login", "POST", "/files", submitBtn);
+
   if (errors) {
     for (const e of errors) {
       if (e.path === "email" || e.msg === "Invalid email") {

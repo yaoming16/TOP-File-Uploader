@@ -1,6 +1,7 @@
 import { sendFormData, addError, clearError } from "./aux.js";
 
 const form = document.getElementById("signupForm");
+const signUpBtn = document.getElementById("signUpBtn");
 
 const name = document.getElementById("name");
 const lastName = document.getElementById("lastName");
@@ -19,7 +20,7 @@ form.addEventListener("submit", async (e) => {
 
   removeAllErrors();
 
-  const errors = await sendFormData(e, "/signup", "POST", "/login");
+  const errors = await sendFormData(e, "/signup", "POST", "/login", signUpBtn);
 
   if (errors) {
     for (let e of errors) {

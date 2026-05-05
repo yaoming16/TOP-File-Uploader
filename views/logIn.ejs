@@ -16,7 +16,7 @@
       <form id="loginForm" class="form" autocomplete="off">
         <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"}) %>
         <%- include("./elements/input.ejs", {id: "password", text: "Password", type: "password", name: "password"}) %>
-        <button type="submit">Log In</button>
+        <button type="submit" id="logInBtn">Log In</button>
       </form>
     </main>
     <%- include("./elements/footer.ejs") %>

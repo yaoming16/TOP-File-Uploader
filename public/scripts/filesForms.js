@@ -6,6 +6,7 @@ const folderId = folderForm.dataset.folderId;
 
 const folderName = document.getElementById("folderName");
 const folderNameError = document.getElementById("folderNameError");
+const createFolderBtn = document.getElementById("createFolderBtn");
 
 folderForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -17,7 +18,9 @@ folderForm.addEventListener("submit", async (e) => {
     `/files/add/${folderId}/folder`,
     "POST",
     `/files/${folderId}/folder`,
+    createFolderBtn
   );
+
   if (errors) {
     for (const e of errors) {
       addError(folderName, folderNameError, e.msg);
@@ -31,6 +34,7 @@ const fileForm = document.getElementById("fileForm");
 
 const file = document.getElementById("file");
 const fileError = document.getElementById("fileError");
+const uploadFileBtn = document.getElementById("uploadFileBtn");
 
 fileForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -42,6 +46,7 @@ fileForm.addEventListener("submit", async (e) => {
     `/files/add/${folderId}/file`,
     "POST",
     `/files/${folderId}/folder`,
+    uploadFileBtn
   );
   if (errors) {
     for (const e of errors) {
@@ -63,6 +68,7 @@ confirmDelete.addEventListener("click", async () => {
       `/files/delete/${id}/${type}`,
       "DELETE",
       window.location.href,
+      confirmDelete
     );
   }
 });
@@ -71,6 +77,7 @@ confirmDelete.addEventListener("click", async () => {
 const updateForm = document.getElementById("updateForm");
 const newNameInput = document.getElementById("newName");
 const newNameError = document.getElementById("newNameError");
+const confirmUpdate = document.getElementById("confirmUpdate");
 
 updateForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -86,6 +93,7 @@ updateForm.addEventListener("submit", async (e) => {
       `/files/update/${id}/${type}`,
       "PUT",
       window.location.href,
+      confirmUpdate
     );
     if (errors) {
       for (const e of errors) {
