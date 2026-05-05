@@ -13,7 +13,7 @@
     <%- include("./elements/header.ejs") %>
     <main>
       <h1 class="form-title">Sign Up</h1>
-      <form id="signupForm" autocomplete="off">
+      <form id="signupForm" class="form" autocomplete="off">
         <%- include("./elements/input.ejs", {id: "name", text: "Name", type: "text", name: "name"}) %>
         <%- include("./elements/input.ejs", {id: "lastName", text: "Last Name", type: "text", name: "lastName"}) %>
         <%- include("./elements/input.ejs", {id: "email", text: "Email", type: "email", name: "email"}) %>
