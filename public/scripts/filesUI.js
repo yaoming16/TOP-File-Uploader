@@ -95,3 +95,30 @@ openInfoModalBtn.addEventListener("click", () => {
     document.getElementById("infoFileType").textContent = "Type: " + extension;
   }
 });
+
+/* Disable download link */
+
+folderContentContainer.addEventListener('DOMContentLoaded', () => {
+  // Select all file download links
+  const downloadLinks = document.querySelectorAll('.name-container a');
+
+  downloadLinks.forEach(link => {
+    link.addEventListener('click', function(event) {
+      // If already disabled, prevent default action just in case
+      if (this.classList.contains('disabled-link')) {
+        event.preventDefault();
+        return;
+      }
+
+      // 1. Visually disable the link and prevent further clicks
+      this.classList.add('disabled-link');
+
+      // 2. Re-enable the link after a short delay (e.g., 3 seconds)
+      // Since we can't know exactly when the download finishes, 
+      // a 3-second cooldown is usually perfect to prevent spam-clicks.
+      setTimeout(() => {
+        this.classList.remove('disabled-link');
+      }, 3000); 
+    });
+  });
+});

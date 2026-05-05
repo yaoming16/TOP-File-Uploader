@@ -146,7 +146,7 @@ async function getOneFile(req, res) {
       // Set headers
       res.setHeader(
         "Content-Disposition", // Tells the browser to open "save as"
-        `attachment; filename="${file.name}"`, //Tells the browser the suggested file name
+        `attachment; filename="${file.name}${file.extension}"`, //Tells the browser the suggested file name
       );
       res.setHeader("Content-Type", cloudinaryRes.headers["content-type"]); // Copy the content type cloudinary sent
 
@@ -237,7 +237,7 @@ async function updateOneFile(req, res) {
       .json({ error: "error: Unauthorized or file not found" });
   }
 
-  return res.status(200).json({ message: "Folder successfully updated" });
+  return res.status(200).json({ message: "File successfully updated" });
 }
 
 module.exports = {
