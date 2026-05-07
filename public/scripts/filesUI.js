@@ -98,7 +98,6 @@ openInfoModalBtn.addEventListener("click", () => {
 
 /* Disable download link */
 folderContentContainer.addEventListener("click", (e) => {
-  console.log(e.target.classList);
   // If not a link return
   if (!e.target.classList.contains("file-card-link")) return;
 
