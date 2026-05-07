@@ -4,69 +4,68 @@
 
 This application allows users to create accounts, authenticate securely, and manage their own files and folders in a structured repository. Users can upload various types of files (images, documents, etc.), organize them into folders, rename them, view file details, and safely delete them.
 
-**Live Preview:** [File Space](https://file-space.onrender.com/)  
+**Live Preview:** [File Space](https://file-space.onrender.com/)
+
 > ⚠️ **Note:** This project is hosted on a free Render tier. Due to cold starts, the page may take up to 50 seconds to load initially. Please be patient!
 
 ---
 
 ## 📸 Screenshots
 
-*[Leave space here to add your application screenshots later]*
-
 ## HomePage
-![HomePage](/public/images/HomePage.jpg)
 
-![HomePage](/public/images/HomePage2.jpg)
+![Homepage](/public/images/homepage.webp)
+
+![Information displayed in the homepage explaining the page functionalities](/public/images/homepage2.webp)
 
 ## Log In and Sign Up
 
-![Log In](/public/images/Log In.jpg)
+![Log In form](/public/images/login.webp)
 
-![Sign Up](/public/images/Sign Up.jpg)
+![Sign Up form](/public/images/signup.webp)
 
 ## Files View
 
-![Log In](/public/images/Files View.jpg)
+![Page showing the files of the user that is logged in](/public/images/filesview.webp)
 
-![Log In](/public/images/options.jpg)
+![Option menu that opens when the user right clicks a file or folder](/public/images/options.webp)
 
-## Add File 
+## Add File
 
-![Log In](/public/images/Add File.jpg)
+![Add file form](/public/images/addfile.webp)
 
 ## Add Folder
 
-![Log In](/public/images/Add Folder.jpg)
+![Add folder form](/public/images/addfolder.webp)
 
 ## Delte File/Folder
 
-![Log In](/public/images/delete.jpg)
+![Warning that appear before deleting a file](/public/images/delete.webp)
 
 ## Rename
 
-![Log In](/public/images/rename.jpg)
+![Form to rename a file or folder](/public/images/rename.webp)
 
 ## More Info
 
-![Log In](/public/images/moreInfo.jpg)
----
+## ![Modal that displays extra information of the selected file or folder](/public/images/moreinfo.webp)
 
 ## 🛠 Built With
 
-* **Backend:** Node.js, Express.js
-* **Frontend:** EJS, CSS
-* **Database & ORM:** PostgreSQL, Prisma
-* **Authentication:** Passport.js, express-session (with Prisma session store)
-* **File Uploads & Storage:** Multer, Cloudinary
-* **Deployment:** Render
+- **Backend:** Node.js, Express.js
+- **Frontend:** EJS, CSS
+- **Database & ORM:** PostgreSQL, Prisma
+- **Authentication:** Passport.js, express-session (with Prisma session store)
+- **File Uploads & Storage:** Multer, Cloudinary
+- **Deployment:** Render
 
 ## ✨ Features
 
-* **User Authentication:** Secure sign up, log in, and log out functionality.
-* **File Management:** Upload files with automatic size and extension tracking.
-* **Folder System:** Create, read, update, and delete folders, including nested sub-folders.
-* **Media Storage:** Files are securely uploaded to and served from Cloudinary.
-* **Privacy:** Users only have access to their own files and folders.
+- **User Authentication:** Secure sign up, log in, and log out functionality.
+- **File Management:** Upload files with automatic size and extension tracking.
+- **Folder System:** Create, read, update, and delete folders, including nested sub-folders.
+- **Media Storage:** Files are securely uploaded to and served from Cloudinary.
+- **Privacy:** Users only have access to their own files and folders.
 
 ## 🚀 Getting Started
 
@@ -74,11 +73,11 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-* Node.js installed
-* A local or cloud PostgreSQL database
-* A free Cloudinary account
+- Node.js installed
+- A local or cloud PostgreSQL database
+- A free Cloudinary account
 
 ## 👤 Author
 
-* Website: [pabloperezweb.com](http://pabloperezweb.com)
-* GitHub: [@yaoming16](https://github.com/yaoming16)
+- Website: [pabloperezweb.com](http://pabloperezweb.com)
+- GitHub: [@yaoming16](https://github.com/yaoming16)
