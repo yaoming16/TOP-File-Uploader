@@ -26,6 +26,14 @@ switch (file.extension) {
   case ".pdf":
     svgRoute = "../svgs/pdfSvg.ejs"
     break;
+  case ".jpg":
+  case ".jpeg":
+  case ".png":
+  case ".gif":
+  case ".bmp":
+  case ".svg":
+    svgRoute = "../svgs/imageSvg.ejs"
+    break;
   default:
     svgRoute = "../svgs/genericFileSvg.ejs"
     break;

@@ -3,13 +3,13 @@
 .homepage-section {
   padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 5vw, 2rem);
   text-align: center;
-  min-height: 100svh;
 }
 
 .hero-section {
   background-color: var(--color-bg-elevated);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 100svh;
 }
 
 .hero-title {
@@ -74,6 +74,7 @@
 .example-image {
   width: 300px;
   max-width: 100%;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -145,9 +146,9 @@
 
 #imgDialog {
   margin: auto auto;
-  width: 90%;
-  max-width: 1000px;
-  max-height: 90vh; 
+  width: fit-content;
+  max-width: 95vw;
+  max-height: 95vh; 
   border: none;
   border-radius: 8px;
   padding: clamp(0.5rem, 2vw, 1.5rem);
@@ -156,8 +157,10 @@
 }
 
 #imgDialog img {
-  width: 100%;
-  max-height: 80vh;
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
   object-fit: contain; 
   border-radius: 4px;
   display: block;
