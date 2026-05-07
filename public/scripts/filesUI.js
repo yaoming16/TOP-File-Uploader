@@ -92,7 +92,8 @@ openInfoModalBtn.addEventListener("click", () => {
   if (size)
     document.getElementById("infoFileSize").textContent = "Size: " + size;
   if (extension) {
-    document.getElementById("infoFileType").textContent = "Type: " + extension;
+    document.getElementById("infoFileExtension").textContent =
+      "Type: " + extension;
   }
 });
 
