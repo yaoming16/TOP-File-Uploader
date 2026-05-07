@@ -136,6 +136,7 @@ async function postFile(req, res) {
 }
 
 async function getOneFile(req, res) {
+  console.log("Downloading file with id:", req.params.fileId);
   // File will be null if the file with id req.params.fileId isnt owned by current user
   const file = await getFileById(parseInt(req.params.fileId), req.user.id);
   if (!file) return res.status(403).send("Unauthorized");

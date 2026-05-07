@@ -97,28 +97,24 @@ openInfoModalBtn.addEventListener("click", () => {
 });
 
 /* Disable download link */
+folderContentContainer.addEventListener("click", (e) => {
+  console.log(e.target.classList);
+  // If not a link return
+  if (!e.target.classList.contains("file-card-link")) return;
 
-folderContentContainer.addEventListener('DOMContentLoaded', () => {
-  // Select all file download links
-  const downloadLinks = document.querySelectorAll('.name-container a');
+  // If already disabled, prevent default action just in case
+  if (e.target.classList.contains("disabled-link")) {
+    e.preventDefault();
+    return;
+  }
 
-  downloadLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-      // If already disabled, prevent default action just in case
-      if (this.classList.contains('disabled-link')) {
-        event.preventDefault();
-        return;
-      }
+  // Visually disable the link and prevent further clicks
+  e.target.classList.add("disabled-link");
 
-      // 1. Visually disable the link and prevent further clicks
-      this.classList.add('disabled-link');
-
-      // 2. Re-enable the link after a short delay (e.g., 3 seconds)
-      // Since we can't know exactly when the download finishes, 
-      // a 3-second cooldown is usually perfect to prevent spam-clicks.
-      setTimeout(() => {
-        this.classList.remove('disabled-link');
-      }, 3000); 
-    });
-  });
+  // Re-enable the link after a short delay (e.g., 3 seconds)
+  // Since we can't know exactly when the download finishes,
+  // a 3-second cooldown will be used.
+  setTimeout(() => {
+    e.target.classList.remove("disabled-link");
+  }, 3000);
 });
