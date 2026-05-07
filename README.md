@@ -1,6 +1,8 @@
 # TOP-File-Uploader
 
-A personal file hosting and management application (like a mini Google Drive) built as part of [The Odin Project's Node.js curriculum](https://www.theodinproject.com/lessons/nodejs-file-uploader).
+**TOP-File-Uploader** (also known as File Space) is a full-stack personal file hosting and management application, inspired by services like Google Drive. It was built as a capstone project for [The Odin Project's Node.js curriculum](https://www.theodinproject.com/lessons/nodejs-file-uploader).
+
+This application allows users to create accounts, authenticate securely, and manage their own files and folders in a structured repository. Users can upload various types of files (images, documents, etc.), organize them into folders, rename them, view file details, and safely delete them.
 
 **Live Preview:** [File Space](https://file-space.onrender.com/)  
 > ⚠️ **Note:** This project is hosted on a free Render tier. Due to cold starts, the page may take up to 50 seconds to load initially. Please be patient!

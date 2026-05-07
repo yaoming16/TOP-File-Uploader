@@ -63,3 +63,11 @@ nav button:focus {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+@media (max-width: 480px) {
+  nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
